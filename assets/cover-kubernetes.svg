@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Kubernetes CTF cover">
+  <rect width="900" height="520" fill="#f4f7f8"/>
+  <g fill="#d34848" opacity=".9">
+    <circle cx="105" cy="155" r="34"/>
+    <path d="M98 192h72l40 80-38 18-28-54-22 122H76l18-100-42 48-31-28z"/>
+  </g>
+  <g fill="#22736f">
+    <text x="300" y="250" font-family="Arial, sans-serif" font-size="120" font-weight="900">RE:UN10</text>
+    <text x="285" y="334" font-family="Arial, sans-serif" font-size="52" font-weight="900">CAPTURE THE FLAG</text>
+  </g>
+  <g stroke="#7bd7c8" stroke-width="4" fill="none" opacity=".55">
+    <path d="M670 112l72 42v84l-72 42-72-42v-84z"/>
+    <path d="M670 112v84l72 42M670 196l-72 42"/>
+  </g>
+</svg>

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Music | 4ry</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      .music-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+      .music-table thead th {
+        text-align: left;
+        padding: 0.85rem 1rem;
+        font-size: 0.92rem;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.16);
+      }
+      .music-table td {
+        padding: 0.95rem 1rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.12);
+        vertical-align: top;
+      }
+      .music-table td.text-right {
+        text-align: right;
+        white-space: nowrap;
+      }
+      .music-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .music-section {
+        margin-top: 1.5rem;
+      }
+      .top-albums {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.75rem;
+        align-items: start;
+      }
+      .top-album {
+        text-align: center;
+      }
+      .top-album img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 1rem;
+        display: block;
+      }
+      .scroll-frame {
+        max-height: 320px;
+        overflow-y: auto;
+        padding-right: 0.25rem;
+      }
+      .scroll-frame table {
+        margin-top: 0;
+      }
+      @media (max-width: 920px) {
+        .top-albums {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .music-table thead {
+          display: none;
+        }
+        .music-table, .music-table tbody, .music-table tr, .music-table td {
+          display: block;
+          width: 100%;
+        }
+        .music-table tr {
+          margin-bottom: 0.85rem;
+          border: 1px solid rgba(128, 128, 128, 0.12);
+          border-radius: 0.85rem;
+          overflow: hidden;
+        }
+        .music-table td {
+          border: none;
+          padding: 0.75rem 0.85rem;
+        }
+        .music-table td::before {
+          content: attr(data-label) ": ";
+          font-weight: 700;
+          display: inline-block;
+          width: 5.5rem;
+          color: var(--muted);
+        }
+        .music-table td.text-right {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body data-page="music">
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home">
+        <img class="avatar" src="../assets/avatar.jpg" alt="">
+        <span class="site-title">4ry</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html"><span>⌂</span>Home</a>
+        <a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a>
+        <a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a>
+        <a class="nav-link active" href="/music/"><span>♪</span>Music</a>
+      </nav>
+
+      <div class="socials" aria-label="Social links">
+        <button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button>
+        <a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a>
+        <a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a>
+        <a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a>
+        <a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a>
+      </div>
+    </aside>
+
+    <main class="shell">
+      <header class="topbar">
+        <div><a class="crumb" href="../index.html">Home</a><span class="muted"> › Music</span></div>
+      </header>
+
+      <div class="layout">
+        <section class="content article">
+          <h1 class="page-title">Listening — recent & top</h1>
+
+          <div id="musicContainer">
+            <section class="post-card music-section">
+              <div class="post-copy">
+                <h2>Top 5 Albums</h2>
+                <div class="top-albums" id="topAlbums"></div>
+              </div>
+            </section>
+            <section class="post-card music-section">
+              <div class="post-copy">
+                <h2>Playlists</h2>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5CMq10woukVqGutyn89bE7?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px; margin-top:1rem;" src="https://open.spotify.com/embed/playlist/0d34FsyrgD4oyvoKf0N8Ps?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px; margin-top:1rem;" src="https://open.spotify.com/embed/playlist/294P1rd7qQex7UWg1rZQ3M?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+              </div>
+            </section>
+            <div class="post-card music-section" id="nowPlayingCard" style="display:none;">
+              <div class="post-copy">
+                <h2 id="nowPlayingTitle">Now playing</h2>
+                <p id="nowPlayingArtist" class="muted"></p>
+                <div id="nowPlayingTime" class="meta"></div>
+              </div>
+            </div>
+
+            <section class="post-card music-section">
+              <div class="post-copy">
+                <h2>Recent tracks</h2>
+                <div class="table-wrapper scroll-frame">
+                  <table class="music-table" id="recentTable">
+                    <thead>
+                      <tr>
+                        <th>Track</th>
+                        <th>Artist</th>
+                        <th class="text-right">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recentList"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="post-card music-section">
+              <div class="post-copy">
+                <h2>Top artists (month)</h2>
+                <div class="table-wrapper scroll-frame">
+                  <table class="music-table" id="topArtistsTable">
+                    <thead>
+                      <tr>
+                        <th>Artist</th>
+                        <th>Plays</th>
+                        <th class="text-right">Last seen</th>
+                      </tr>
+                    </thead>
+                    <tbody id="topArtistsList"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="post-card music-section">
+              <div class="post-copy">
+                <h2>Top tracks (month)</h2>
+                <div class="table-wrapper scroll-frame">
+                  <table class="music-table" id="topTracksTable">
+                    <thead>
+                      <tr>
+                        <th>Track</th>
+                        <th>Artist</th>
+                        <th class="text-right">Last seen</th>
+                      </tr>
+                    </thead>
+                    <tbody id="topTracksList"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          </div>
+
+        </section>
+      </div>
+    </main>
+
+    <script src="../posts-data.js?v=clean-descriptions"></script>
+    <script src="../script.js"></script>
+
+    <script>
+      // Inspired-by implementation: uses site's layout and styles, lightweight JS
+      const API_KEY = 'fa3e98bf38cbee2d094dd74cd56e795e';
+      const USERNAME = 'aakamai';
+
+      function el(id) { return document.getElementById(id); }
+
+      async function fetchJson(url) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      }
+
+      const topAlbumFiles = [
+        'WhatsApp Image 2026-05-23 at 5.15.31 AM.jpeg',
+        'WhatsApp Image 2026-05-23 at 5.15.31 AM (1).jpeg',
+        'WhatsApp Image 2026-05-23 at 5.15.31 AM (2).jpeg',
+        'WhatsApp Image 2026-05-23 at 5.15.31 AM (3).jpeg',
+        'WhatsApp Image 2026-05-23 at 5.15.31 AM (4).jpeg'
+      ];
+      const topAlbumCovers = topAlbumFiles.map(name => encodeURI(`../top5/${name}`));
+
+      function formatPlays(n){ return n ? `${n} plays` : '' }
+
+      function relativeTime(uts){
+        if (!uts) return '';
+        const seconds = Math.floor(Date.now()/1000 - parseInt(uts, 10));
+        if (seconds < 60) return 'just now';
+        if (seconds < 3600) return `${Math.floor(seconds / 60)} minute${Math.floor(seconds / 60) === 1 ? '' : 's'} ago`;
+        if (seconds < 86400) return `${Math.floor(seconds / 3600)} hour${Math.floor(seconds / 3600) === 1 ? '' : 's'} ago`;
+        if (seconds < 604800) return `${Math.floor(seconds / 86400)} day${Math.floor(seconds / 86400) === 1 ? '' : 's'} ago`;
+        return new Date(parseInt(uts, 10) * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      }
+
+      function buildLastSeenMaps(items){
+        const artist = new Map();
+        const track = new Map();
+        items.forEach(it => {
+          const uts = it.date?.uts;
+          if (!uts) return;
+          const artistKey = escapeHtml(it.artist['#text']);
+          const trackKey = `${escapeHtml(it.name)}|${artistKey}`;
+          const existingArtist = artist.get(artistKey);
+          const existingTrack = track.get(trackKey);
+          if (!existingArtist || parseInt(uts, 10) > parseInt(existingArtist, 10)) {
+            artist.set(artistKey, uts);
+          }
+          if (!existingTrack || parseInt(uts, 10) > parseInt(existingTrack, 10)) {
+            track.set(trackKey, uts);
+          }
+        });
+        return { artist, track };
+      }
+
+      async function loadMusic() {
+        try {
+          const recent = await fetchJson(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&limit=10&format=json`);
+          const topAlbums = await fetchJson(`https://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user=${USERNAME}&api_key=${API_KEY}&period=1month&limit=5&format=json`);
+          const topArtists = await fetchJson(`https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=${USERNAME}&api_key=${API_KEY}&period=1month&limit=8&format=json`);
+          const topTracks = await fetchJson(`https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=${USERNAME}&api_key=${API_KEY}&period=1month&limit=8&format=json`);
+
+          const recentTracks = recent.recenttracks?.track || [];
+          const lastSeen = buildLastSeenMaps(recentTracks);
+
+          renderTopAlbums(topAlbums.topalbums?.album || []);
+          renderRecent(recentTracks);
+          renderTopArtists(topArtists.topartists?.artist || [], lastSeen.artist);
+          renderTopTracks(topTracks.toptracks?.track || [], lastSeen.track);
+        } catch (e) {
+          console.error('music load failed', e);
+          el('recentList').innerHTML = '<tr><td colspan="3" class="muted">Unable to load music.</td></tr>';
+        }
+      }
+
+      function renderRecent(items){
+        const list = el('recentList'); list.innerHTML = '';
+        if (!items.length) {
+          list.innerHTML = '<tr><td colspan="3" class="muted">No recent tracks.</td></tr>';
+          return;
+        }
+        items.forEach(it => {
+          const now = it['@attr']?.nowplaying === 'true';
+          const label = now ? 'Now' : (it.date?.uts ? relativeTime(it.date.uts) : '');
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td data-label="Track"><strong>${escapeHtml(it.name)}</strong></td>
+            <td data-label="Artist">${escapeHtml(it.artist['#text'])}</td>
+            <td data-label="Time" class="text-right">${escapeHtml(label)}</td>
+          `;
+          list.appendChild(row);
+          if (now) showNowPlaying(it);
+        });
+      }
+
+      function renderTopArtists(items, lastSeen){
+        const list = el('topArtistsList'); list.innerHTML = '';
+        if (!items.length) {
+          list.innerHTML = '<tr><td colspan="3" class="muted">No artists.</td></tr>';
+          return;
+        }
+        items.forEach((a)=>{
+          const artistName = escapeHtml(a.name);
+          const row = document.createElement('tr');
+          const seen = lastSeen.get(artistName);
+          row.innerHTML = `
+            <td data-label="Artist"><strong>${artistName}</strong></td>
+            <td data-label="Plays">${formatPlays(a.playcount)}</td>
+            <td data-label="Last seen" class="text-right">${seen ? relativeTime(seen) : '—'}</td>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      function renderTopTracks(items, lastSeen){
+        const list = el('topTracksList'); list.innerHTML = '';
+        if (!items.length) {
+          list.innerHTML = '<tr><td colspan="3" class="muted">No tracks.</td></tr>';
+          return;
+        }
+        items.forEach((t)=>{
+          const trackName = escapeHtml(t.name);
+          const artistName = escapeHtml(t.artist.name);
+          const row = document.createElement('tr');
+          const seen = lastSeen.get(`${trackName}|${artistName}`);
+          row.innerHTML = `
+            <td data-label="Track"><strong>${trackName}</strong></td>
+            <td data-label="Artist">${artistName}</td>
+            <td data-label="Last seen" class="text-right">${seen ? relativeTime(seen) : '—'}</td>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      function showNowPlaying(track){
+        const card = el('nowPlayingCard');
+        el('nowPlayingTitle').textContent = track.name;
+        el('nowPlayingArtist').textContent = track.artist['#text'];
+        el('nowPlayingTime').textContent = 'Now playing';
+        card.style.display = '';
+      }
+
+      function renderTopAlbums(items){
+        const container = el('topAlbums');
+        container.innerHTML = '';
+        if (!items.length) {
+          container.innerHTML = '<div class="muted">No top albums available.</div>';
+          return;
+        }
+        items.forEach((album, index) => {
+          const cover = topAlbumCovers[index] || album.image?.[3]?.['#text'] || album.image?.[2]?.['#text'] || album.image?.[0]?.['#text'] || '';
+          const card = document.createElement('div');
+          card.className = 'top-album';
+          card.innerHTML = `
+              <img src="${escapeHtml(cover)}" alt="${escapeHtml(album.name)}">
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]) }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        loadMusic();
+      });
+    </script>
+  </body>
+</html>

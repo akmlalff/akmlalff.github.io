@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Netmon cover">
+  <rect width="900" height="520" fill="#15191f"/>
+  <rect width="900" height="170" fill="#223040"/>
+  <g fill="none" stroke="#8db5ff" stroke-width="4" opacity=".42">
+    <path d="M92 86h160v88h120v-58h120v78h180V84h124"/>
+    <path d="M92 274h116v88h162v-52h130v74h170v-95h130"/>
+  </g>
+  <circle cx="450" cy="176" r="112" fill="#9ec45a"/>
+  <circle cx="450" cy="176" r="86" fill="#2b3441"/>
+  <path d="M404 165h92l-14 72h-64z" fill="#d2a386"/>
+  <path d="M390 144c28-42 92-42 120 0l-18 56h-84z" fill="#efd0b8"/>
+  <path d="M390 244h120l46 84H344z" fill="#394555"/>
+  <text x="450" y="424" text-anchor="middle" fill="#eef1f4" font-family="Arial, sans-serif" font-size="44" font-weight="700">Netmon has been Pwned</text>
+</svg>

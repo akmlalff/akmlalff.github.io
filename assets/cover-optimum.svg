@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Optimum cover">
+  <rect width="900" height="520" fill="#101216"/>
+  <rect width="900" height="180" fill="#223040"/>
+  <g stroke="#8db5ff" stroke-width="4" fill="none" opacity=".44">
+    <path d="M40 95h180m30 0h180m30 0h180m30 0h190"/>
+    <path d="M124 52v86M345 52v86M565 52v86M760 52v86"/>
+  </g>
+  <circle cx="450" cy="190" r="112" fill="#9ec45a"/>
+  <circle cx="450" cy="190" r="84" fill="#263044"/>
+  <path d="M450 92l68 78-40 126h-56l-40-126z" fill="#e14960"/>
+  <path d="M450 92l-68 78 55 8zM450 92l68 78-55 8z" fill="#43a5ff"/>
+  <path d="M392 238l-44-28M508 238l44-28" stroke="#eef1f4" stroke-width="16" stroke-linecap="round"/>
+  <text x="450" y="424" text-anchor="middle" fill="#eef1f4" font-family="Arial, sans-serif" font-size="44" font-weight="700">Optimum has been Pwned</text>
+</svg>

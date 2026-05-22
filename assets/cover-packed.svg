@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Reverse engineering cover">
+  <rect width="900" height="520" fill="#111318"/>
+  <path d="M0 0h900v180H0z" fill="#202a38"/>
+  <path d="M0 180h900v340H0z" fill="#172026"/>
+  <g opacity=".45" stroke="#7bd7c8" stroke-width="3" fill="none">
+    <path d="M70 105h160m34 0h118m37 0h180m45 0h162M122 58v96M318 55v100M612 58v98M742 57v101"/>
+    <path d="M118 318h130m38 0h95m52 0h190m34 0h120M210 260v118M505 250v142M700 250v138"/>
+  </g>
+  <g transform="translate(338 112)">
+    <rect width="224" height="224" rx="44" fill="#262b34" stroke="#8db5ff" stroke-width="8"/>
+    <path d="M76 151l-31-39 31-39M148 73l31 39-31 39" fill="none" stroke="#7bd7c8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M127 62l-30 101" stroke="#f3c969" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <text x="450" y="420" fill="#e7e9ee" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="700">REV</text>
+  <text x="450" y="462" fill="#8db5ff" text-anchor="middle" font-family="Arial, sans-serif" font-size="24">runtime hooks</text>
+</svg>

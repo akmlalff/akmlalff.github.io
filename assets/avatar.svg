@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Terminal avatar">
+  <defs>
+    <linearGradient id="g" x1="25" x2="215" y1="20" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8db5ff"/>
+      <stop offset=".55" stop-color="#7bd7c8"/>
+      <stop offset="1" stop-color="#f3c969"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="120" fill="#101216"/>
+  <circle cx="120" cy="120" r="103" fill="url(#g)" opacity=".25"/>
+  <rect x="42" y="62" width="156" height="116" rx="16" fill="#1e232b" stroke="#c6ccd8" stroke-width="5"/>
+  <circle cx="65" cy="83" r="7" fill="#ff817a"/>
+  <circle cx="88" cy="83" r="7" fill="#f3c969"/>
+  <circle cx="111" cy="83" r="7" fill="#7bd7c8"/>
+  <path d="M72 122l25 20-25 20" fill="none" stroke="#8db5ff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M114 162h54" fill="none" stroke="#7bd7c8" stroke-width="10" stroke-linecap="round"/>
+</svg>
