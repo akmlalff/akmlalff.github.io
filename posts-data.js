@@ -1,5 +1,16 @@
 const posts = [
   {
+    "title": "Bahtera Siber 3108 CTF 2026: Warisan Takhta",
+    "date": "Aug 31, 2026",
+    "category": "CTF",
+    "tags": [
+      "Bahtera Siber 3108 CTF 2026"
+    ],
+    "excerpt": "Bahtera Siber 3108 CTF 2026: Warisan Takhta writeup.",
+    "cover": "",
+    "url": "posts/bahtera-siber-3108-ctf-2026-warisan-takhta.html"
+  },
+  {
     "title": "NahamCon CTF 2025",
     "date": "May 25, 2025",
     "category": "CTF",

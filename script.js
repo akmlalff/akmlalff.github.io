@@ -119,7 +119,7 @@ function renderGroups() {
     .map(([event, topics], index) => {
       const eventPosts = Object.values(topics).flat().sort(byDate);
       return `
-        <details class="category-dropdown event-dropdown" ${index < 2 ? "open" : ""}>
+        <details class="category-dropdown event-dropdown">
           <summary class="group-row event-row">
             <span class="folder">▱</span>
             <strong>${event}</strong>
@@ -128,7 +128,7 @@ function renderGroups() {
           </summary>
           <div class="topic-list">
             ${Object.entries(topics).sort(([a], [b]) => a.localeCompare(b)).map(([topic, entries]) => `
-              <details class="topic-dropdown" open>
+              <details class="topic-dropdown">
                 <summary class="topic-row">
                   <span>▸</span>
                   <strong>${topic}</strong>

@@ -187,7 +187,7 @@ a {
 }
 
 .crumb {
-  color: var(--accent);
+  color: #f0f1f3;
   font-size: 1.05rem;
 }
 
@@ -471,13 +471,13 @@ a {
 }
 
 .group-row strong {
-  color: var(--accent);
+  color: #f0f1f3;
   font-size: 1.15rem;
   font-weight: 500;
 }
 
 .group-row span {
-  color: var(--muted);
+  color: #f0f1f3;
 }
 
 .chevron {
@@ -515,7 +515,7 @@ a {
   border: 1px solid rgba(52, 54, 60, .9);
   border-radius: 8px;
   background: rgba(255, 255, 255, .035);
-  color: var(--muted);
+  color: #f0f1f3;
 }
 
 .topic-row span {
@@ -524,7 +524,7 @@ a {
 }
 
 .topic-row strong {
-  color: #cfd2d8;
+  color: #f0f1f3;
   font-size: .98rem;
   font-weight: 700;
 }
@@ -557,7 +557,7 @@ a {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 1rem;
-  color: var(--accent);
+  color: #f0f1f3;
 }
 
 .compact-list a::after,
@@ -575,7 +575,7 @@ a {
 
 .compact-list time,
 .archive-row time {
-  color: var(--muted);
+  color: #f0f1f3;
   order: 2;
   white-space: nowrap;
 }
@@ -687,6 +687,186 @@ a {
 
 .article-body blockquote:empty {
   display: none;
+}
+
+.imported-docx {
+  font-size: .98rem;
+}
+
+.imported-docx .post-note {
+  margin: 0 0 1.2rem;
+  padding: .8rem .95rem;
+  border: 1px solid rgba(141, 181, 255, .22);
+  border-radius: 8px;
+  color: #d7dce6;
+  background: rgba(141, 181, 255, .07);
+}
+
+.toc-panel {
+  margin: 0 0 2rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.toc-panel summary {
+  cursor: pointer;
+  padding: .9rem 1rem;
+  color: #f0f1f3;
+  font-weight: 800;
+}
+
+.toc-panel ol {
+  columns: 2;
+  column-gap: 2rem;
+  margin: 0;
+  padding: 0 1.2rem 1.1rem 2.4rem;
+}
+
+.toc-panel li {
+  break-inside: avoid;
+  margin: .22rem 0;
+  color: var(--muted);
+}
+
+.toc-panel a {
+  color: #f0f1f3;
+}
+
+.toc-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .7rem;
+  padding: 0 .75rem .75rem;
+}
+
+.toc-group {
+  border: 1px solid rgba(52, 54, 60, .86);
+  border-radius: 8px;
+  padding: 0 .8rem .7rem;
+  background: rgba(255, 255, 255, .028);
+}
+
+.toc-group h3 {
+  margin: .55rem 0 .45rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  font-size: .96rem;
+}
+
+.toc-group h3 span {
+  min-width: 1.55rem;
+  height: 1.55rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #111318;
+  background: var(--accent);
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.toc-panel .toc-group ol {
+  columns: 1;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+}
+
+.toc-panel .toc-group li {
+  margin: .08rem 0;
+  color: #f0f1f3;
+  line-height: 1.45;
+}
+
+.toc-panel a:hover {
+  color: var(--accent);
+}
+
+.imported-docx h2 {
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  font-size: 1.45rem;
+}
+
+.imported-docx h3 {
+  margin: 2rem 0 .8rem;
+  color: #eef1f7;
+  font-size: 1.18rem;
+}
+
+.imported-docx h4 {
+  margin: 1.15rem 0 .45rem;
+  color: var(--accent-2);
+  font-size: .98rem;
+}
+
+.imported-docx figure {
+  padding: .65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .035);
+}
+
+.imported-docx figure img {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.flag-line {
+  padding: .65rem .8rem;
+  border-left: 3px solid var(--warn);
+  border-radius: 0 8px 8px 0;
+  color: #f2d891;
+  background: rgba(243, 201, 105, .08);
+  overflow-wrap: anywhere;
+}
+
+.challenge-description {
+  margin: .55rem 0 1rem;
+  padding: .75rem .85rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  color: #f0f1f3;
+  background: rgba(141, 181, 255, .07);
+}
+
+.challenge-description h4 {
+  margin: 0 0 .4rem;
+  color: #f0f1f3;
+  font-size: .86rem;
+  text-transform: uppercase;
+}
+
+.challenge-description p {
+  margin: .45rem 0 0;
+}
+
+:root[data-theme="light"] .imported-docx .post-note,
+:root[data-theme="light"] .toc-panel,
+:root[data-theme="light"] .imported-docx figure {
+  background: rgba(255, 255, 255, .72);
+}
+
+:root[data-theme="light"] .imported-docx h2,
+:root[data-theme="light"] .imported-docx h3,
+:root[data-theme="light"] .toc-panel summary {
+  color: #20242a;
+}
+
+:root[data-theme="light"] .imported-docx .post-note {
+  color: #3f4650;
+}
+
+:root[data-theme="light"] .flag-line {
+  color: #6c4a0b;
+}
+
+:root[data-theme="light"] .challenge-description,
+:root[data-theme="light"] .challenge-description h4 {
+  color: #20242a;
 }
 
 .pdf-viewer {
@@ -1043,6 +1223,10 @@ a {
   }
 
   .right-rail {
+    grid-template-columns: 1fr;
+  }
+
+  .toc-groups {
     grid-template-columns: 1fr;
   }
 

