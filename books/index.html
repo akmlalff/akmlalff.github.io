@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Books | 4ry</title>
+    <link rel="stylesheet" href="../styles.css?v=sidebar-text-nav">
+    <style>
+      .book-section {
+        margin-top: 1.5rem;
+      }
+
+      .book-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 0 .9rem;
+      }
+
+      .goodreads-link {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .55rem .75rem;
+        border: 1px solid rgba(141, 181, 255, .45);
+        border-radius: 8px;
+        color: var(--accent);
+        font-size: .9rem;
+        font-weight: 800;
+      }
+
+      .book-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: .85rem;
+      }
+
+      .book-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .032);
+      }
+
+      .book-card img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        display: block;
+        object-fit: cover;
+        background: var(--panel-2);
+      }
+
+      .book-card-body {
+        display: grid;
+        gap: .35rem;
+        padding: .72rem .78rem .82rem;
+      }
+
+      .book-card h2 {
+        margin: 0;
+        color: #f0f1f3;
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+
+      .book-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .35rem .5rem;
+        color: var(--muted);
+        font-size: .78rem;
+        font-weight: 750;
+      }
+
+      :root[data-theme="light"] .book-card h2 {
+        color: #20242a;
+      }
+
+      :root[data-theme="light"] .book-card {
+        background: rgba(255, 255, 255, .75);
+      }
+
+      @media (max-width: 920px) {
+        .book-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .book-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .goodreads-link {
+          justify-content: center;
+        }
+
+        .book-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body data-page="books">
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home">
+        <img class="avatar" src="../assets/avatar.jpg" alt="">
+        <span class="site-title">4ry</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html"><span>⌂</span>Home</a>
+        <a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a>
+        <a class="nav-link" href="/music/"><span>♪</span>Music</a>
+        <a class="nav-link" href="/movies/"><span>▣</span>Movies</a>
+        <a class="nav-link active" href="/books/"><span>□</span>Books</a>
+        <a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a>
+      </nav>
+
+      <div class="socials" aria-label="Social links">
+        <button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button>
+        <a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a>
+        <a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a>
+        <a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a>
+        <a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a>
+      </div>
+    </aside>
+
+    <main class="shell">
+      <header class="topbar">
+        <div><a class="crumb" href="../index.html">Home</a><span class="muted"> › Books</span></div>
+      </header>
+
+      <div class="layout">
+        <section class="content article">
+          <section class="book-section" aria-label="Books">
+            <div class="book-toolbar">
+              <a class="goodreads-link" href="https://www.goodreads.com/review/list/118685087?ref=nav_mybooks" target="_blank" rel="noopener">View Goodreads</a>
+            </div>
+            <div class="book-grid" id="bookGrid" aria-live="polite"></div>
+          </section>
+        </section>
+      </div>
+    </main>
+
+    <script src="../posts-data.js?v=categories-folders"></script>
+    <script src="../script.js?v=books-nav"></script>
+    <script>
+      const BOOKS_DATA = "./books.json";
+
+      function renderBooks(books) {
+        const grid = document.querySelector("#bookGrid");
+        grid.replaceChildren();
+
+        books.forEach(book => {
+          const card = document.createElement("a");
+          card.className = "book-card";
+          card.href = book.link;
+          card.target = "_blank";
+          card.rel = "noopener";
+
+          const cover = document.createElement("img");
+          cover.src = book.cover;
+          cover.alt = book.title + " cover";
+          cover.loading = "lazy";
+
+          const body = document.createElement("div");
+          body.className = "book-card-body";
+
+          const title = document.createElement("h2");
+          title.textContent = book.title;
+
+          const meta = document.createElement("div");
+          meta.className = "book-meta";
+          [book.author, book.year, Number(book.rating) > 0 ? book.rating + "/5" : ""]
+            .filter(Boolean)
+            .forEach(value => {
+              const span = document.createElement("span");
+              span.textContent = value;
+              meta.append(span);
+            });
+
+          body.append(title, meta);
+          card.append(cover, body);
+          grid.append(card);
+        });
+      }
+
+      async function loadBooks() {
+        try {
+          const response = await fetch(BOOKS_DATA, { cache: "no-store" });
+          if (!response.ok) throw new Error("Books data unavailable");
+          const data = await response.json();
+          renderBooks(data.books || []);
+        } catch (error) {
+          document.querySelector("#bookGrid").replaceChildren();
+        }
+      }
+
+      loadBooks();
+    </script>
+  </body>
+</html>

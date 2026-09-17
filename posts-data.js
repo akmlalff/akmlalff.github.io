@@ -1,5 +1,17 @@
 const posts = [
   {
+    "title": "NodeRabbit Malware",
+    "date": "Sep 8, 2026",
+    "category": "Malware Analysis",
+    "tags": [
+      "Malware Analysis",
+      "NodeRabbit"
+    ],
+    "excerpt": "NodeRabbit Malware analysis covering persistence, C2 behavior, indicators of compromise, and response recommendations.",
+    "cover": "",
+    "url": "posts/noderabbit-malware.html"
+  },
+  {
     "title": "Bahtera Siber 3108 CTF 2026: Warisan Takhta",
     "date": "Aug 31, 2026",
     "category": "CTF",

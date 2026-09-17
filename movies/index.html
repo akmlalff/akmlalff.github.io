@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movies | 4ry</title>
+    <link rel="stylesheet" href="../styles.css?v=sidebar-text-nav">
+    <style>
+      .movie-section {
+        margin-top: 1.5rem;
+      }
+
+      .movie-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 0 .9rem;
+      }
+
+      .letterboxd-link {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .55rem .75rem;
+        border: 1px solid rgba(141, 181, 255, .45);
+        border-radius: 8px;
+        color: var(--accent);
+        font-size: .9rem;
+        font-weight: 800;
+      }
+
+      .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: .85rem;
+      }
+
+      .movie-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .032);
+      }
+
+      .movie-card img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        display: block;
+        object-fit: cover;
+        background: var(--panel-2);
+      }
+
+      .movie-card-body {
+        display: grid;
+        gap: .35rem;
+        padding: .72rem .78rem .82rem;
+      }
+
+      .movie-card h2 {
+        margin: 0;
+        color: #f0f1f3;
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+
+      .movie-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .35rem .5rem;
+        color: var(--muted);
+        font-size: .78rem;
+        font-weight: 750;
+      }
+
+      :root[data-theme="light"] .movie-card h2 {
+        color: #20242a;
+      }
+
+      :root[data-theme="light"] .movie-card {
+        background: rgba(255, 255, 255, .75);
+      }
+
+      @media (max-width: 920px) {
+        .movie-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .movie-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .letterboxd-link {
+          justify-content: center;
+        }
+
+        .movie-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body data-page="movies">
+    <aside class="sidebar">
+      <a class="brand" href="../index.html" aria-label="Home">
+        <img class="avatar" src="../assets/avatar.jpg" alt="">
+        <span class="site-title">4ry</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html"><span>⌂</span>Home</a>
+        <a class="nav-link" href="../categories/index.html"><span>☰</span>Categories</a>
+        <a class="nav-link" href="/music/"><span>♪</span>Music</a>
+        <a class="nav-link active" href="/movies/"><span>▣</span>Movies</a><a class="nav-link" href="/books/"><span>□</span>Books</a>
+        <a class="nav-link" href="../about/index.html"><span>ⓘ</span>About</a>
+      </nav>
+
+      <div class="socials" aria-label="Social links">
+        <button class="theme-toggle" type="button" aria-label="Toggle light mode">◐</button>
+        <a href="https://github.com/akmlalff" aria-label="GitHub"><img class="social-icon" src="../assets/icons/github.svg" alt=""></a>
+        <a href="https://www.linkedin.com/in/akmalaliff" aria-label="LinkedIn"><img class="social-icon" src="../assets/icons/linkedin.svg" alt=""></a>
+        <a href="mailto:akmalaliff@gmail.com" aria-label="Email"><img class="social-icon" src="../assets/icons/email.svg" alt=""></a>
+        <a href="https://open.spotify.com/user/22ixrbtx4wsrufvosaf2gf3ty?si=6948217fbb694f00" aria-label="Spotify"><img class="social-icon" src="../assets/icons/spotify.svg" alt=""></a>
+      </div>
+    </aside>
+
+    <main class="shell">
+      <header class="topbar">
+        <div><a class="crumb" href="../index.html">Home</a><span class="muted"> › Movies</span></div>
+      </header>
+
+      <div class="layout">
+        <section class="content article">
+          <section class="movie-section" aria-label="Movies">
+            <div class="movie-toolbar">
+              <a class="letterboxd-link" href="https://letterboxd.com/akmlalff/films/by/rated-date/" target="_blank" rel="noopener">View Letterboxd</a>
+            </div>
+            <div class="movie-grid" id="movieGrid" aria-live="polite"></div>
+          </section>
+        </section>
+      </div>
+    </main>
+
+    <script src="../posts-data.js?v=categories-folders"></script>
+    <script src="../script.js?v=books-nav"></script>
+    <script>
+      const MOVIES_DATA = "./movies.json";
+
+      function renderMovies(movies) {
+        const grid = document.querySelector("#movieGrid");
+        grid.replaceChildren();
+
+        movies.forEach(movie => {
+          const card = document.createElement("a");
+          card.className = "movie-card";
+          card.href = movie.link;
+          card.target = "_blank";
+          card.rel = "noopener";
+
+          const poster = document.createElement("img");
+          poster.src = movie.poster;
+          poster.alt = movie.title + " poster";
+          poster.loading = "lazy";
+
+          const body = document.createElement("div");
+          body.className = "movie-card-body";
+
+          const title = document.createElement("h2");
+          title.textContent = movie.title;
+
+          const meta = document.createElement("div");
+          meta.className = "movie-meta";
+          [movie.year, movie.ratingText || (movie.rating ? movie.rating + "/5" : "")]
+            .filter(Boolean)
+            .forEach(value => {
+              const span = document.createElement("span");
+              span.textContent = value;
+              meta.append(span);
+            });
+
+          body.append(title, meta);
+          card.append(poster, body);
+          grid.append(card);
+        });
+      }
+
+      async function loadMovies() {
+        try {
+          const response = await fetch(MOVIES_DATA, { cache: "no-store" });
+          if (!response.ok) throw new Error("Movies data unavailable");
+          const data = await response.json();
+          renderMovies(data.movies || []);
+        } catch (error) {
+          document.querySelector("#movieGrid").replaceChildren();
+        }
+      }
+
+      loadMovies();
+    </script>
+  </body>
+</html>

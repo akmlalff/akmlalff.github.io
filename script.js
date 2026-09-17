@@ -1,8 +1,48 @@
 const rootPrefix = location.pathname.includes("/posts/") ||
   location.pathname.includes("/categories/") ||
+  location.pathname.includes("/movies/") ||
+  location.pathname.includes("/books/") ||
   location.pathname.includes("/about/")
   ? "../"
   : "";
+
+function ensureMoviesNav() {
+  const nav = document.querySelector(".nav");
+  if (!nav || [...nav.querySelectorAll("a")].some(link => link.href.includes("/movies/"))) return;
+
+  const moviesLink = document.createElement("a");
+  moviesLink.className = "nav-link";
+  moviesLink.href = `${rootPrefix}movies/`;
+  moviesLink.innerHTML = "<span>▣</span>Movies";
+
+  const aboutLink = [...nav.querySelectorAll("a")]
+    .find(link => link.textContent.trim().toLowerCase().includes("about"));
+
+  if (aboutLink) {
+    nav.insertBefore(moviesLink, aboutLink);
+  } else {
+    nav.append(moviesLink);
+  }
+}
+
+function ensureBooksNav() {
+  const nav = document.querySelector(".nav");
+  if (!nav || [...nav.querySelectorAll("a")].some(link => link.href.includes("/books/"))) return;
+
+  const booksLink = document.createElement("a");
+  booksLink.className = "nav-link";
+  booksLink.href = `${rootPrefix}books/`;
+  booksLink.innerHTML = "<span>□</span>Books";
+
+  const aboutLink = [...nav.querySelectorAll("a")]
+    .find(link => link.textContent.trim().toLowerCase().includes("about"));
+
+  if (aboutLink) {
+    nav.insertBefore(booksLink, aboutLink);
+  } else {
+    nav.append(booksLink);
+  }
+}
 
 function applyTheme() {
   const saved = localStorage.getItem("theme") || "dark";
@@ -98,10 +138,8 @@ function slug(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-function renderGroups() {
-  const target = document.querySelector("#groupList");
-  if (!target) return;
-  const eventGroups = posts.reduce((groups, post) => {
+function groupByEvent(list) {
+  return list.reduce((groups, post) => {
     const event = post.tags[0] || "CTF";
     const topic = post.tags[1] || "Writeup";
     groups[event] ||= {};
@@ -109,40 +147,86 @@ function renderGroups() {
     groups[event][topic].push(post);
     return groups;
   }, {});
+}
 
-  target.innerHTML = Object.entries(eventGroups)
+function sortedEventEntries(eventGroups) {
+  return Object.entries(eventGroups)
     .sort(([, aTopics], [, bTopics]) => {
       const aNewest = Math.max(...Object.values(aTopics).flat().map(post => new Date(post.date)));
       const bNewest = Math.max(...Object.values(bTopics).flat().map(post => new Date(post.date)));
       return bNewest - aNewest;
-    })
-    .map(([event, topics], index) => {
-      const eventPosts = Object.values(topics).flat().sort(byDate);
-      return `
-        <details class="category-dropdown event-dropdown">
-          <summary class="group-row event-row">
-            <span class="folder">▱</span>
-            <strong>${event}</strong>
-            <span>${eventPosts.length} ${eventPosts.length === 1 ? "writeup" : "writeups"}</span>
-            <span class="chevron">⌄</span>
-          </summary>
-          <div class="topic-list">
-            ${Object.entries(topics).sort(([a], [b]) => a.localeCompare(b)).map(([topic, entries]) => `
-              <details class="topic-dropdown">
-                <summary class="topic-row">
-                  <span>▸</span>
-                  <strong>${topic}</strong>
-                  <small>${entries.length}</small>
-                </summary>
-                <div class="compact-list nested-list">
-                  ${[...entries].sort(byDate).map(post => `<a href="${rootPrefix}${post.url}"><span>${post.title}</span><time>${post.date}</time></a>`).join("")}
-                </div>
-              </details>
-            `).join("")}
-          </div>
-        </details>
-      `;
-    }).join("");
+    });
+}
+
+function renderPostLinks(entries) {
+  return [...entries].sort(byDate)
+    .map(post => `<a href="${rootPrefix}${post.url}"><span>${post.title}</span></a>`)
+    .join("");
+}
+
+function renderEventDropdown(event, topics) {
+  const eventPosts = Object.values(topics).flat().sort(byDate);
+  return `
+    <details class="category-dropdown event-dropdown">
+      <summary class="group-row event-row">
+        <span class="folder">▱</span>
+        <strong>${event}</strong>
+        <span class="chevron">⌄</span>
+      </summary>
+      <div class="topic-list">
+        ${Object.entries(topics).sort(([a], [b]) => a.localeCompare(b)).map(([topic, entries]) => `
+          <details class="topic-dropdown">
+            <summary class="topic-row">
+              <span>▸</span>
+              <strong>${topic}</strong>
+            </summary>
+            <div class="compact-list nested-list">
+              ${renderPostLinks(entries)}
+            </div>
+          </details>
+        `).join("")}
+      </div>
+    </details>
+  `;
+}
+
+function renderGroups() {
+  const target = document.querySelector("#groupList");
+  if (!target) return;
+
+  const malwarePosts = posts.filter(post => post.category === "Malware Analysis");
+  const ctfPosts = posts.filter(post => post.category === "CTF");
+  const ctfGroups = groupByEvent(ctfPosts);
+
+  const malwareSection = malwarePosts.length ? `
+    <details class="category-dropdown event-dropdown" open>
+      <summary class="group-row event-row">
+        <span class="folder">▱</span>
+        <strong>Malware Analysis</strong>
+        <span class="chevron">⌄</span>
+      </summary>
+      <div class="topic-list">
+        <div class="compact-list nested-list direct-list">
+          ${malwarePosts.sort(byDate).map(post => `<a href="${rootPrefix}${post.url}"><span>${post.tags[1] || post.title}</span></a>`).join("")}
+        </div>
+      </div>
+    </details>
+  ` : "";
+
+  const ctfSection = ctfPosts.length ? `
+    <details class="category-dropdown event-dropdown" open>
+      <summary class="group-row event-row">
+        <span class="folder">▱</span>
+        <strong>CTF Writeups</strong>
+        <span class="chevron">⌄</span>
+      </summary>
+      <div class="topic-list">
+        ${sortedEventEntries(ctfGroups).map(([event, topics]) => renderEventDropdown(event, topics)).join("")}
+      </div>
+    </details>
+  ` : "";
+
+  target.innerHTML = malwareSection + ctfSection;
 }
 
 function wireSearch() {
@@ -189,6 +273,8 @@ function wireThemeToggle() {
   });
 }
 
+ensureMoviesNav();
+ensureBooksNav();
 wireThemeToggle();
 renderStats();
 populateFilters();
